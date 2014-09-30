@@ -7,3 +7,7 @@ TODO:
  - Add ports
  - Add modes (create links, selection...)
  
+
+-----
+ - Templates
+ - Stencil/sticker
