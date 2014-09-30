@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>OpenNaaS Library</title>
+        
+        <script type="text/javascript" src="external/jquery.min.js"></script>
+        <script type="text/javascript" src="external/d3.v3.min.js"></script>
+        <script type="text/javascript" src="ONtoD3lib.js"></script>
+        <script type="text/javascript" src="draw_lib.js"></script>
+        
+        <link rel="stylesheet" type="text/css" media="screen" href="ONtoD3lib.css">
+    </head>
+    <body>
+        <div id="graph" ></div>
+        <br/><br/><br/>
+
+        <a href="javascript:createNetworkElement()">Add new netowkrElement</a>  
+        <a href="javascript:getNetworkElements()">Get networkELements</a>  
+        <a href="javascript:graph.addNode('B');">Add Node</a>
+        <a href="javascript:graph.removeNode('B');">Del Node</a>
+        
+        <script type="text/javascript" src="draw_lib_execution.js"></script>
+    </body>
+</html>
