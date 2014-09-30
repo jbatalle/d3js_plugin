@@ -2,7 +2,7 @@ d3js_plugin
 ===========
 
 TODO:
- - Selection
+ - Selection (partially)
  - Create links with drag
  - Add ports
  - Add modes (create links, selection...)
