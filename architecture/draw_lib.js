@@ -75,10 +75,7 @@ function myGraph(el) {
         .size([w, h]);
  
     var drag_line = vis.append('svg:path')
-        .attr({
-            'class' : 'dragline hidden',
-            'd'     : 'M0,0L0,0'
-        });
+        .attr({ 'class' : 'dragline hidden', 'd' : 'M0,0L0,0'});
     
     var nodes = force.nodes(),
         links = force.links();
@@ -100,7 +97,7 @@ function myGraph(el) {
         var node = vis.selectAll("g.node")
             .data(nodes, function(d) { return d.id;});
  
-        var nodeEnter = node.enter().append("g")
+        var nodeEnter = this.nodeEnter = node.enter().append("g")
             .attr("class", "node")
             .on("mousedown", function(d){
                 startState =d, endState = undefined;
@@ -126,9 +123,9 @@ function myGraph(el) {
             .text(function(d) {return d.id});
 
         nodeEnter.attr("transform", function (d) {
-        console.log(d.x + "," + d.y);
-        return "translate(" + d.x + "," + d.y + ")";
-    });
+            return "translate(" + d.x + "," + d.y + ")";
+        });
+        
         node.exit().remove();
  
         /****************** Multi selection - Rectangle that allows select ****************************/
