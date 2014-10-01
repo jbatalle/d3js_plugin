@@ -3,6 +3,8 @@
 *
 */
 
+addJSFile('models/elements.js');
+
 var startState, endState, drag_line;
 var drag_line;
 
@@ -10,12 +12,17 @@ function myGraph(el) {
      
     // Add and remove elements on the graph object
     this.addNode = function (id) {
-        nodes.push({id: id, fixed: true, transitions: [], x: 200, y:200});
+        nodes.push({id: id, fixed: true, type: "helpImage", transitions: [], x: 200, y:200, width: "20px", height: "20px"});
         update();
     }
     
     this.addNodewithPos = function (id, x, y) {
         nodes.push({id: id, fixed: true, transitions: [], x: x, y:y});
+        update();
+    }
+    
+    this.addNodewithData = function (data) {
+        nodes.push(data);
         update();
     }
  
@@ -87,8 +94,13 @@ function myGraph(el) {
  
         var link = vis.selectAll("line.link")
             .data(links, function(d) { return d.source.id + "-" + d.target.id; });
-        
-        link
+ 
+        link.enter().insert("line")
+            .attr("class", "link")
+            .attr("x1", function(d) { return d.source.x; })
+            .attr("y1", function(d) { return d.source.y; })
+            .attr("x2", function(d) { return d.target.x; })
+            .attr("y2", function(d) { return d.target.y; })
             .on("mousedown", function(d){
                 linkMouseDown(d);
             })
@@ -96,14 +108,7 @@ function myGraph(el) {
             })
             .on('mouseup', function (d) {
                 linkMouseUp(d);
-            })
- 
-        link.enter().insert("line")
-            .attr("class", "link")
-            .attr("x1", function(d) { return d.source.x; })
-            .attr("y1", function(d) { return d.source.y; })
-            .attr("x2", function(d) { return d.target.x; })
-            .attr("y2", function(d) { return d.target.y; });
+            });
 
         link.exit().remove();
  
@@ -126,14 +131,14 @@ function myGraph(el) {
         
         nodeEnter.append("image")
             .attr("class", "circle")
-            .attr("xlink:href", "helpImage.jpg")
+            .attr("xlink:href", function(d){return graphImage[d.type];})
             .attr("fixed", false)
             .attr("x", "-8px")
             .attr("y", "-8px")
             .attr("cx", function (d) {return d.x - 20;})
             .attr("cy", function (d) {return d.y - 15;})
-            .attr("width", "20px")
-            .attr("height", "20px");
+            .attr("width", function(d){ return d.width;})
+            .attr("height", function(d){ return d.height;});
  
         nodeEnter.append("text")
             .attr("class", "nodetext")
@@ -248,7 +253,6 @@ function myGraph(el) {
        
         /* END Multi selection */
         
-        
         force.on("tick", function() {
           link.attr("x1", function(d) { return d.source.x; })
               .attr("y1", function(d) { return d.source.y; })
@@ -265,15 +269,7 @@ function myGraph(el) {
     // Make it all go
     update();
 }
- 
-d3.select(window)
-    .on('keydown', keydown)
-    .on('keyup', keyup);
 
 function transform(d) {
     return "translate(" + d.x + "," + d.y + ")";
-}
-
-function keydown() {
-  ctrlKey = d3.event.ctrlKey || d3.event.metaKey;
 }

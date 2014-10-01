@@ -7,10 +7,22 @@ var graph,
     mouseup_node = null,
     ctrlKey = false;//ctrl key is pressed?;
 
+//images...
+var graphImage = {};
+graphImage["ofSwitch"] = "img/ofSwitch.png";
+graphImage["ofController"] = "img/ofController.png";
+graphImage["helpImage"] = "img/helpImage.png";
 
+d3.select(window)
+    .on('keydown', keydown)
+    .on('keyup', keyup);
 
 function keyup() {
   ctrlKey = false;
+}
+
+function keydown() {
+  ctrlKey = d3.event.ctrlKey || d3.event.metaKey;
 }
 
 function resetMouseVars() {
