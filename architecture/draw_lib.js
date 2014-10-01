@@ -2,11 +2,18 @@
 * Draw library. This library creates the SVG and allows to add/remove nodes...
 *
 */
+var startState, endState, drag_line;
+
 function myGraph(el) {
      
     // Add and remove elements on the graph object
     this.addNode = function (id) {
         nodes.push({id: id, fixed: true, transitions: [], x: 200, y:200});
+        update();
+    }
+    
+    this.addNodewithPos = function (id, x, y) {
+        nodes.push({id: id, fixed: true, transitions: [], x: x, y:y});
         update();
     }
  
@@ -50,6 +57,10 @@ function myGraph(el) {
     this.getNodes = function() {
         return nodes;   
     }
+    
+    this.getLinks = function() {
+        return links;   
+    }
  
     // set up the D3 visualisation in the specified element
     var w = $(el).innerWidth(),
@@ -63,17 +74,27 @@ function myGraph(el) {
         .linkDistance(30)
         .size([w, h]);
  
+    var drag_line = vis.append('svg:path')
+        .attr({
+            'class' : 'dragline hidden',
+            'd'     : 'M0,0L0,0'
+        });
+    
     var nodes = force.nodes(),
         links = force.links();
  
-    var update = function () {
+    var update = this.update = function () {
  
         var link = vis.selectAll("line.link")
             .data(links, function(d) { return d.source.id + "-" + d.target.id; });
  
         link.enter().insert("line")
-            .attr("class", "link");
- 
+            .attr("class", "link")
+            .attr("x1", function(d) { return d.source.x; })
+            .attr("y1", function(d) { return d.source.y; })
+            .attr("x2", function(d) { return d.target.x; })
+            .attr("y2", function(d) { return d.target.y; });
+
         link.exit().remove();
  
         var node = vis.selectAll("g.node")
@@ -81,8 +102,38 @@ function myGraph(el) {
  
         var nodeEnter = node.enter().append("g")
             .attr("class", "node")
+            .on("mousedown", function(d){
+                startState =d, endState = undefined;
+                // reposition drag line
+            })
             .call( drag);
- 
+        /*d3.behavior.drag()
+                .on("dragstart", function(d){
+console.log("Dragstart enabled");
+                d3.event.sourceEvent.stopPropagation();
+                d3.select(this).classed("dragging", true);
+            })
+            .on("drag", function(d) {
+                node_id = findNodeIndex(d.id);
+                d.px += d3.event.dx;
+                    d.py += d3.event.dy;
+                    d.x = d3.event.x, d.y = d3.event.y;
+                    nodes[node_id].x = d.x;
+                    nodes[node_id].y = d.y;
+                    nodes[node_id].fixed = true;
+                console.log(links);
+                    node.filter(function(n) { return n.id === d.id; }).attr("transform", transform);
+                    link.filter(function(l) { console.log("LinkFilter");console.log(l); return l.source === d; }).attr("x1", d.x).attr("y1", d.y);
+//                    link.filter(function(l) { return l.target === d; }).attr("x2", d.x).attr("y2", d.y);
+                console.log(links[0].source.x + " " +links[0].source.y);
+            })
+            .on("dragend", function(d){
+console.log("Dragend");
+                //updateTopology(nodes, links);
+                d3.select(this).classed("dragging", false);
+            })
+	);
+ */
         nodeEnter.append("image")
             .attr("class", "circle")
             .attr("xlink:href", "helpImage.jpg")
@@ -99,7 +150,11 @@ function myGraph(el) {
             .attr("dx", 12)
             .attr("dy", ".35em")
             .text(function(d) {return d.id});
- 
+
+        nodeEnter.attr("transform", function (d) {
+        console.log(d.x + "," + d.y);
+        return "translate(" + d.x + "," + d.y + ")";
+    });
         node.exit().remove();
  
         /* Multi selection */
@@ -107,9 +162,7 @@ function myGraph(el) {
         vis.on({
             mousedown : function() {
                 console.log("Selection enabled");
-                console.log( "mousedown", d3.event.target);
                 if( d3.event.target.tagName=='svg') {
-
                     if( !d3.event.ctrlKey) {
                         d3.selectAll( 'g.selected').classed( "selected", false);
                     }
@@ -129,7 +182,6 @@ function myGraph(el) {
                     }
             },
             mousemove : function() {
-            //console.log( "mousemove");
             var p = d3.mouse( this),
                 s = vis.select( "rect.selection");
 
@@ -143,8 +195,7 @@ function myGraph(el) {
                     move = {
                         x : p[0] - d.x,
                         y : p[1] - d.y
-                    }
-                ;
+                    };
                 if( move.x < 1 || (move.x*2<d.width)) {
                     d.x = p[0];
                     d.width -= move.x;
@@ -165,7 +216,6 @@ function myGraph(el) {
                 d3.selectAll( 'g.node.selection.selected').classed( "selected", false);
 console.log("Select");
                 d3.selectAll( 'g.node').each( function( state_data, i) {
-                    console.log("if radius try");
                     if( 
                         !d3.select( this).classed( "selected") && 
                             // inner circle inside selection frame
@@ -182,7 +232,9 @@ console.log("Select");
                     // update drag line
                 drag_line.attr('d', 'M' + startState.x + ',' + startState.y + 'L' + p[0] + ',' + p[1]);
 
-                var state = d3.select( 'g.node .inner.hover');
+//                var state = d3.select( 'g.node .inner.hover');
+                var state = d3.select( 'g.node');
+                
                 endState = (!state.empty() && state.data()[0]) || undefined;
             }
         },
@@ -205,10 +257,6 @@ console.log("Select");
         }
 });
        
-       
-
-        
-        
         /* END Multi selection */
         
         
@@ -218,7 +266,7 @@ console.log("Select");
               .attr("x2", function(d) { return d.target.x; })
               .attr("y2", function(d) { return d.target.y; });
  
-          node.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+          //node.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
         });
  
         // Restart the force layout.
@@ -229,3 +277,6 @@ console.log("Select");
     update();
 }
  
+function transform(d) {
+    return "translate(" + d.x + "," + d.y + ")";
+}
