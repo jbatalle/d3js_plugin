@@ -2,7 +2,9 @@
 * Draw library. This library creates the SVG and allows to add/remove nodes...
 *
 */
+
 var startState, endState, drag_line;
+var drag_line;
 
 function myGraph(el) {
      
@@ -74,16 +76,27 @@ function myGraph(el) {
         .linkDistance(30)
         .size([w, h]);
  
-    var drag_line = vis.append('svg:path')
+    drag_line = vis.append('svg:path')
         .attr({ 'class' : 'dragline hidden', 'd' : 'M0,0L0,0'});
     
     var nodes = force.nodes(),
         links = force.links();
  
+    
     var update = this.update = function () {
  
         var link = vis.selectAll("line.link")
             .data(links, function(d) { return d.source.id + "-" + d.target.id; });
+        
+        link
+            .on("mousedown", function(d){
+                linkMouseDown(d);
+            })
+            .on('mouseover', function (d) {
+            })
+            .on('mouseup', function (d) {
+                linkMouseUp(d);
+            })
  
         link.enter().insert("line")
             .attr("class", "link")
@@ -102,6 +115,12 @@ function myGraph(el) {
             .on("mousedown", function(d){
                 startState =d, endState = undefined;
                 // reposition drag line
+                nodeMouseDown(d);
+            })
+            .on('mouseover', function (d) {
+            })
+            .on('mouseup', function (d) {
+                nodeMouseUp(d);
             })
             .call( drag);
         
@@ -247,6 +266,14 @@ function myGraph(el) {
     update();
 }
  
+d3.select(window)
+    .on('keydown', keydown)
+    .on('keyup', keyup);
+
 function transform(d) {
     return "translate(" + d.x + "," + d.y + ")";
+}
+
+function keydown() {
+  ctrlKey = d3.event.ctrlKey || d3.event.metaKey;
 }

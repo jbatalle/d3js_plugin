@@ -1,5 +1,6 @@
 var drag = d3.behavior.drag()
     .on("drag", function (d, i) {
+         if(ctrlKey){
         console.log("drag");
         if (startState) {
             //return;
@@ -54,6 +55,7 @@ var drag = d3.behavior.drag()
 
 
         d3.event.sourceEvent.stopPropagation();
+         }
     })
     .on("dragend", function (d) {
         console.log("Dragend..........");
