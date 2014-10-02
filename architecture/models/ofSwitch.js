@@ -1,23 +1,20 @@
-
-
+/* OpenFlow Switch Model
+ * Specific parameters: name, dpid, ports
+ */
 function ofSwitch(dpid) {
-    this.name;
-    this.data = {dpid: dpid};
+    this.data = {"dpid": dpid};
     this.type = "ofSwitch";
     this.width = "60px";
     this.height = "60px";
     this.ports = {};
     this.x;
     this.y;
-    
-    NetworkElement.call(this, name);
-    //this.subject = subject;
+
+    NetworkElement.call(this, dpid, this.data);
 }
 
-
-ofSwitch.prototype.getPorts = function(){
-  return this.ports;
-};
-ofSwitch.prototype.getData = function(){
-  return this.data;
+ofSwitch.prototype = {
+    getPorts: function(){
+        return this.ports;
+    }
 };
