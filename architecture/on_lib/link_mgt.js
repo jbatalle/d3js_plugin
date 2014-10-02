@@ -1,5 +1,5 @@
 function linkMouseDown(link) {
-    console.log("Click down on Link");
+    console.log("Click down on Link: "+link.source.id+" "+link.target.id);
 }
 
 function linkMouseUp(link) {
@@ -7,6 +7,7 @@ function linkMouseUp(link) {
 }
 
 function nodeMouseDown(node) {
+    console.log("Node Mouse down");
     // select node
     mousedown_node = node;
     if (mousedown_node === selected_node) selected_node = null;
@@ -16,6 +17,7 @@ function nodeMouseDown(node) {
         return false;
     }); //disable drag in Firefox 3.0 and later
     // reposition drag line
+    console.log("DRag line to pos: "+mousedown_node.x + " y: "+mousedown_node.y);
     drag_line
         .style('marker-end', 'url(#end-arrow)')
         .classed('hidden', false)
@@ -32,6 +34,7 @@ function nodeMouseUp(d) {
     drag_line
         .classed('hidden', true)
         .style('marker-end', '');
+    
     // check for drag-to-self
     mouseup_node = d;
     if (mouseup_node === mousedown_node) {
@@ -45,16 +48,19 @@ function nodeMouseUp(d) {
     target = mouseup_node;
     newSource = source;
     console.log("Source " + source.id + " to Dest " + target.id);
+    console.log("Source " + source.x + " to Dest " + source.y);
     var link;
     link = links.filter(function (l) { return (l.source === source && l.target === target); })[0];
-
+    
     d3.selectAll('.dragline').attr('d', 'M0,0L0,0'); //Remove the requested path
-
-    graph.addLink(source.id, target.id);
-
+    
     // select new link
     selected_link = link;
     selected_node = null;
+    
+    if( links.filter(function (l) { return (l.source === source && l.target === target); }).length > 0) return;
+    graph.addLink(source.id, target.id);
+console.log(links);
     //            updateLinks();
 
 }

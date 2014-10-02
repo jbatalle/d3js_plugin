@@ -7,11 +7,14 @@ var graph,
     mouseup_node = null,
     ctrlKey = false;//ctrl key is pressed?;
 
-//images...
+//Node images. The key option of the map is the node type defined in each model of data
 var graphImage = {};
-graphImage["ofSwitch"] = "img/ofSwitch.png";
-graphImage["ofController"] = "img/ofController.png";
-graphImage["helpImage"] = "img/helpImage.png";
+graphImage["ofSwitch"] =        "img/ofSwitch.png";
+graphImage["ofController"] =    "img/ofController.png";
+graphImage["helpImage"] =       "img/helpImage.png";
+
+//Editor options
+var multiSelectMode = false;
 
 d3.select(window)
     .on('keydown', keydown)

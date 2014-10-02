@@ -21,11 +21,12 @@ function myGraph(el) {
     }
     
     this.addNodewithPos = function (id, x, y) {
-        nodes.push({id: id, fixed: true, transitions: [], x: x, y:y});
+        nodes.push({id: id, fixed: true, type: "helpImage", transitions: [], x: x, y: y, width: "20px", height: "20px"});
         update();
     }
     
     this.addNodewithData = function (data) {
+        data.fixed = true;
         data.transitions = [];
         nodes.push(data);
         update();
@@ -43,7 +44,9 @@ function myGraph(el) {
     }
  
     this.addLink = function (source, target) {
-        links.push({"source":findNode(source),"target":findNode(target)});
+console.log("add link");        
+        links.push({id: source+"-"+target, source:findNode(source), target:findNode(target)});
+        console.log(links);
         update();
     }
     
@@ -72,6 +75,14 @@ function myGraph(el) {
         return nodes;   
     }
     
+    this.getNode = function(nodeId) {
+        return findNode(nodeId);
+    }
+    
+    this.setNode = function(node) {
+        nodes[node.id] = node;
+    }
+    
     this.getLinks = function() {
         return links;   
     }
@@ -80,6 +91,13 @@ function myGraph(el) {
     var w = $(el).innerWidth(),
         h = $(el).innerHeight();
  
+    this.getWidth = function() {
+        return w;   
+    }
+    this.getHeight = function() {
+        return h;   
+    }
+    
     var vis = this.vis = d3.select(el).append("svg:svg")
         .attr("width", w)
         .attr("height", h);
@@ -94,18 +112,16 @@ function myGraph(el) {
     var nodes = force.nodes(),
         links = force.links();
  
+    var link = vis.append("svg:g").selectAll("link.sw");
     
     var update = this.update = function () {
+ console.log("Updated executed");
+        link = link.data(links);
  
-        var link = vis.selectAll("line.link")
-            .data(links, function(d) { return d.source.id + "-" + d.target.id; });
- 
-        link.enter().insert("line")
+        link.enter().append("svg:line")
+            .attr('id', function (d) {return d.id;})
             .attr("class", "link")
-            .attr("x1", function(d) { return d.source.x; })
-            .attr("y1", function(d) { return d.source.y; })
-            .attr("x2", function(d) { return d.target.x; })
-            .attr("y2", function(d) { return d.target.y; })
+            .attr("stroke", "black")
             .on("mousedown", function(d){
                 linkMouseDown(d);
             })
@@ -114,34 +130,41 @@ function myGraph(el) {
             .on('mouseup', function (d) {
                 linkMouseUp(d);
             });
-
+        link
+            .attr("x1", function(d) { return d.source.x; })
+            .attr("y1", function(d) { return d.source.y; })
+            .attr("x2", function(d) { return d.target.x; })
+            .attr("y2", function(d) { return d.target.y; })
+        
         link.exit().remove();
  
         var node = vis.selectAll("g.node")
-            .data(nodes, function(d) { return d.id;});
+            .data(nodes);
  
         var nodeEnter = this.nodeEnter = node.enter().append("g")
             .attr("class", "node")
+            .attr("px", function (d) {return d.x;})
+            .attr("py", function (d) {return d.y;})
             .on("mousedown", function(d){
-                startState =d, endState = undefined;
-                // reposition drag line
-                nodeMouseDown(d);
+                if (!ctrlKey) {
+                    startState =d, endState = undefined;
+                    // reposition drag line
+                    nodeMouseDown(d);
+                }
             })
             .on('mouseover', function (d) {
+
             })
             .on('mouseup', function (d) {
                 nodeMouseUp(d);
             })
-            .call( drag);
+            .call(drag);
         
         nodeEnter.append("image")
-            .attr("class", "circle")
             .attr("xlink:href", function(d){return graphImage[d.type];})
             .attr("fixed", false)
-            .attr("x", "-8px")
-            .attr("y", "-8px")
-            .attr("cx", function (d) {return d.x - 20;})
-            .attr("cy", function (d) {return d.y - 15;})
+            .attr("x", "-20px")//-8px
+            .attr("y", "-20px")
             .attr("width", function(d){ return d.width;})
             .attr("height", function(d){ return d.height;});
  
@@ -158,6 +181,7 @@ function myGraph(el) {
         node.exit().remove();
  
         /****************** Multi selection - Rectangle that allows select ****************************/
+            /************** Should need an activation. multiSelectMode var **************/
         var radius = 40;
         vis.on({
             mousedown: function () {
@@ -277,4 +301,8 @@ function myGraph(el) {
 
 function transform(d) {
     return "translate(" + d.x + "," + d.y + ")";
+}
+
+function updateNodes(){
+    
 }

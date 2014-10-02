@@ -7,8 +7,6 @@ function ofSwitch(dpid) {
     this.width = "60px";
     this.height = "60px";
     this.ports = {};
-    this.x;
-    this.y;
 
     NetworkElement.call(this, dpid, this.data);
 }
