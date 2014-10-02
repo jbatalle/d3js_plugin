@@ -1,5 +1,9 @@
 /**
 * Draw library. This library creates the SVG and allows to add/remove nodes...
+* 
+* · on_lib/globalPluginFunctions contains the Global variables (graph, pushed keys...)
+* · Multiselection is handled by on_lib/multiselect file and the vis.on function in this file.
+* · Link management (create links, see link info, remove links...) in on_lib/link_mgt
 *
 */
 
@@ -22,6 +26,7 @@ function myGraph(el) {
     }
     
     this.addNodewithData = function (data) {
+        data.transitions = [];
         nodes.push(data);
         update();
     }
