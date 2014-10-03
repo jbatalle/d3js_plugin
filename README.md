@@ -10,8 +10,8 @@ TODO:
  - Create the html architecture
 
 -----
- - Templates
- - Stencil/sticker
+ - Templates (1/2) More templates. Organize js.
+ - Stencil/sticker (1/2). CSS beauty
 
 -----
 
