@@ -1,4 +1,4 @@
-
+var stencil_image_width = 60;//px
 
 $(function () {
     $(".netEl-drag").draggable({
@@ -47,8 +47,11 @@ function createElement(type, divPos) {
         createHost(divPos);
         break;
     case "laptop":
+        console.log("Element not defined yet");
         createLaptop(divPos);
         break;
+    default:
+        console.log("Element not defined");
     }
 }
 
@@ -66,11 +69,14 @@ function createStencil(){
 	var stencilDiv = document.getElementById("stencil");
 	el = generateHtmlDivElement("ofSwitch");
 	stencilDiv.appendChild(el);
+    el = generateHtmlDivElement("laptop");
+	stencilDiv.appendChild(el);
 }
 
 function generateHtmlDivElement(type){
 	var imgEl = document.createElement("img");
 	imgEl.src = "img/"+type+".png";
+    imgEl.width = stencil_image_width;
 	var el = document.createElement("div");
 	el.id = type;
 	el.className = "ui-widget-content netEl-drag";

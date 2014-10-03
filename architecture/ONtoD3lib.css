@@ -23,6 +23,12 @@
   stroke-linejoin: "round";
 }
 
+
+/* Stencil CSS */
+#stencil { width:200px;height:500px; border:3px solid black;border-radius:12px; margin:auto; float: left;}
+/* D3JS graph */
+#graph { width:80%; height:500px; border:3px solid black;border-radius:12px; margin:auto; float: left}
+
 /* ------------------------------------------------------ */
 
 .node rect {
@@ -31,14 +37,9 @@
   stroke-width: 1;
 }
 
-
-
-        .link { stroke: #ccc; stroke-width: 6px;}
-        .nodetext { pointer-events: none; font: 10px sans-serif; }
-        body { width:100%; height:100%; margin:none; padding:none; }
-        #graph { width:1000px;height:500px; border:3px solid black;border-radius:12px; margin:auto; }
-
-
+.link { stroke: #ccc; stroke-width: 6px;}
+.nodetext { pointer-events: none; font: 10px sans-serif; }
+body { width:100%; height:100%; margin:none; padding:none; }
 
 /** Selection CSS **/
 
@@ -49,37 +50,7 @@ rect.selection {
     fill            : transparent;
 }
 
-g.state circle {
-    stroke  : gray;            
-}
 
-g.state circle.inner {
-    fill        : white;
-    transition  : fill 0.5s;
-    cursor      : move;
-}
-
-g.state circle.inner.hover,
-g.state circle.outer.hover {
-    fill : aliceblue;
-}
-
-g.state circle.outer.hover {
-    stroke-width    : 1px;
-}
-
-g.state circle.outer {
-    stroke-width    : 0px;
-    stroke-dasharray: 2px;
-    stroke-color    : gray;
-    fill            : transparent;
-    transition      : all 0.5s;
-    cursor          : pointer;
-}
-
-g.state.selected circle.outer {
-    stroke-width    : 1px;
-}
 
 g.state text {
     font                : 12px sans-serif;
@@ -126,26 +97,7 @@ g.transition path {
     stroke-width    : 1px;
 }
 
-g.transition circle.endpoint {
-    display         : none;
-    fill            : none;
-    cursor          : pointer;
-    stroke          : gray;
-    stroke-dasharray: 2px;
-}
 
-g.transition circle.point {
-    display         : none;
-    fill            : aliceblue;
-    cursor          : move;
-    stroke          : gray;
-}
-
-g.transition.selected circle.endpoint,
-g.transition.selected circle.point {
-    display        : inline;
-    transition : all 0.5s;
-}
 
 g.transition:not( .selected).hover *,
 path.dragline {
