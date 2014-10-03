@@ -5,8 +5,10 @@
         <title>OpenNaaS Library</title>
         
         <script type="text/javascript" src="external/jquery.min.js"></script>
+        <script src="http://code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
         <script type="text/javascript" src="external/d3.v3.min.js"></script>
         <script type="text/javascript" src="ONtoD3lib.js"></script>
+        <script type="text/javascript" src="on_lib/script_html.js"></script>
         <script type="text/javascript" src="on_lib/globalPluginFunctions.js"></script>
         <script type="text/javascript" src="on_lib/multiselect.js"></script>
         <script type="text/javascript" src="on_lib/link_mgt.js"></script>
@@ -15,7 +17,17 @@
         <link rel="stylesheet" type="text/css" media="screen" href="ONtoD3lib.css">
     </head>
     <body>
-        <div id="graph" ></div>
+        <div id="container">
+		<div id="stencil" style="float:left">
+			<div id="ofSwitch" class="ui-widget-content netEl-drag">
+				<img src="img/ofSwitch.png"></img>
+			</div>
+			<div id="laptop" class="ui-widget-content netEl-drag">
+				<img src="img/laptop.png" width = "20px"></img>
+			</div>
+		</div>
+        	<div id="graph" ></div>
+	</div>
         <br/><br/><br/>
 
         <a href="javascript:createNetworkElement()">Add new netowkrElement</a>  
