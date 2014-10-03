@@ -1,3 +1,5 @@
+
+
 $(function () {
     $(".netEl-drag").draggable({
         helper: "clone"
@@ -61,5 +63,17 @@ function createofSwitch(divPos) {
 }
 
 function createStencil(){
-    
+	var stencilDiv = document.getElementById("stencil");
+	el = generateHtmlDivElement("ofSwitch");
+	stencilDiv.appendChild(el);
+}
+
+function generateHtmlDivElement(type){
+	var imgEl = document.createElement("img");
+	imgEl.src = "img/"+type+".png";
+	var el = document.createElement("div");
+	el.id = type;
+	el.className = "ui-widget-content netEl-drag";
+	el.appendChild(imgEl);
+	return el;
 }

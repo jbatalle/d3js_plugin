@@ -1,3 +1,4 @@
+createStencil();
 graph = new myGraph("#graph");
 graph.addNode("A");
 graph.addNodewithPos("B", 250, 250);
