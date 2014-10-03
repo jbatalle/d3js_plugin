@@ -1,14 +1,20 @@
 var stencil_image_width = 60;//px
 
 $(function () {
+    /* Information message */
+    $(".ui-widget").hide();
+    
+    /* END Information message */
+    
+    /* Stencil - Images draggables to d3js */
     $(".netEl-drag").draggable({
         helper: "clone"
     }); //Network elements draggable
     $("#graph").droppable({
         drop: function (event, ui) {
             x = ui.helper.clone();
-		ui.helper.remove();
-		x.draggable({
+            ui.helper.remove();
+            x.draggable({
                 	helper: 'original',
                 	cursor: 'move',
                 //containment: '#droppable',
@@ -16,7 +22,7 @@ $(function () {
                 	drop: function (event, ui) {
 	                    $(ui.draggable).remove();
 	        	}
-		});
+            });
             var nodeType = ui.draggable.attr("id"),//select the id of the element
                 divPos = {},
                 $div = $("#graph"),
@@ -28,10 +34,11 @@ $(function () {
             };
 
             createElement(nodeType, divPos);
+            showInfoMessage();
             //$("#"+nodeType").remove();
         }
-
     });
+    /* END Stencil - Images draggables to d3js */
 });
 
 function createElement(type, divPos) {
@@ -52,7 +59,9 @@ function createElement(type, divPos) {
         break;
     default:
         console.log("Element not defined");
+        return;
     }
+    
 }
 
 function createofSwitch(divPos) {
@@ -63,6 +72,20 @@ function createofSwitch(divPos) {
     ofSw.setX(divPos.x);
     ofSw.setY(divPos.y);
     graph.addNodewithData(ofSw);
+}
+
+function showInfoMessage(){
+    $("#info_message").show();
+    setInterval(function () { $("#info_message").hide();}, 3000);
+}
+
+function showErrorMessage(){
+    $("#error_message").show();
+    setInterval(function () { $("#error_message").hide();}, 3000);
+}
+
+function createLaptop(){
+    showErrorMessage();
 }
 
 function createStencil(){

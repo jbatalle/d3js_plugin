@@ -50,8 +50,6 @@ rect.selection {
     fill            : transparent;
 }
 
-
-
 g.state text {
     font                : 12px sans-serif;
     font-weight         : bold;
@@ -97,14 +95,11 @@ g.transition path {
     stroke-width    : 1px;
 }
 
-
-
 g.transition:not( .selected).hover *,
 path.dragline {
     display         : inline;
     
 }
-
 
 g.transition:not( .selected).hover {
     transition      : all 0.5s;
@@ -131,4 +126,13 @@ svg *::-moz-selection {
 
 svg *::-webkit-selection {
     background:transparent;
+}
+
+
+/* Information messages JQUERY ui */
+p{
+    margin: 1em 0;   
+}
+strong {
+    font-weight: 900;   
 }

@@ -14,12 +14,30 @@
         <script type="text/javascript" src="on_lib/link_mgt.js"></script>
         <script type="text/javascript" src="draw_lib.js"></script>
         
+        <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/smoothness/jquery-ui.css" />
         <link rel="stylesheet" type="text/css" media="screen" href="ONtoD3lib.css">
     </head>
     <body>
         <div id="container">
             <div id="stencil"></div>
-            <div id="graph" ></div>
+            <div id="graph" >
+                <div id="info_message" class="ui-widget">
+                    <div class="ui-state-highlight ui-corner-all" style="padding: 0 .7em;"> 
+                        <p>
+                            <span class="ui-icon ui-icon-check" style="float: left; margin-right: .3em;"></span>
+                            <strong>Info:</strong> <script>info_message</script>
+                        </p>
+                    </div>
+                </div>
+                <div id="error_message" class="ui-widget">
+                    <div class="ui-state-error ui-corner-all" style="padding: 0 .7em;"> 
+                        <p>
+                            <span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span>
+                            <strong>Alert:</strong> <script>error_message</script>
+                        </p>
+                    </div>
+                </div>
+            </div>
         </div>
         <br/><br/><br/>
 
