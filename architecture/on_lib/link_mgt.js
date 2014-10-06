@@ -13,9 +13,7 @@ function nodeMouseDown(node) {
     if (mousedown_node === selected_node) selected_node = null;
     else selected_node = mousedown_node;
     selected_link = null;
-    $(document).on("dragstart", function () {
-        return false;
-    }); //disable drag in Firefox 3.0 and later
+//    $(document).on("dragstart", function () { return false; }); //disable drag in Firefox 3.0 and later
     // reposition drag line
     console.log("DRag line to pos: "+mousedown_node.x + " y: "+mousedown_node.y);
     drag_line
