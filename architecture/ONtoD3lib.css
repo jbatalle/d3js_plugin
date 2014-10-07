@@ -60,7 +60,7 @@ g.transition path,
 path.dragline {
     fill        : none;
     stroke      : gray;
-    stroke-width: 1px;
+    stroke-width: 3px;
 }
 
 g.transition path.foreground {
@@ -108,7 +108,7 @@ g.transition:not( .selected).hover {
 path.dragline {
     pointer-events: none;
     stroke-opacity  : 0.5;
-    stroke-dasharray: 2px;
+    stroke-dasharray: 4px;
 }
 
 path.dragline.hidden {

@@ -95,9 +95,20 @@ var drag = d3.behavior.drag()
                     if (d.y > graph.getHeight()) {
                         d.y = graph.getHeight();
                     }
-                    
-                    link.filter(function (l) { return l.source === d;}).attr("x1", d.x).attr("y1", d.y);
-                    link.filter(function (l) { return l.target === d; }).attr("x2", d.x).attr("y2", d.y);
+console.log("Dragging Node - Look Portrs");
+                    console.log(d);
+                    d.ports[0].x = d.ports[0].posx + d.x;
+                    d.ports[0].y =  d.ports[0].posy + d.y;
+                    d.ports[1].x =  d.ports[1].posx + d.x;
+                    d.ports[1].y =  d.ports[1].posy+ d.y;
+                    for(var i=0; i<d.ports.length; i++){
+//                        console.log(d.ports[i]);
+                        transform(d.ports[i]);
+                        link.filter(function (l) { return l.source === d.ports[i];}).attr("x1", d.ports[i].x).attr("y1", d.ports[i].y);  
+                        link.filter(function (l) { return l.target === d.ports[i]; }).attr("x2", d.ports[i].x).attr("y2", d.ports[i].y);
+                    }
+//                    link.filter(function (l) { return l.source === d;}).attr("x1", d.x).attr("y1", d.y);
+//                    link.filter(function (l) { return l.target === d; }).attr("x2", d.x).attr("y2", d.y);
                     return "translate(" + [d.x, d.y] + ")";
                 });
             }

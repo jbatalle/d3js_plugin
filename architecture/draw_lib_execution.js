@@ -1,12 +1,19 @@
 createStencil();
 graph = new myGraph("#graph");
-graph.addNode("A");
-graph.addNodewithPos("B", 250, 250);
+//graph.addNode("A");
+//graph.addNodewithPos("B", 250, 250);
 var newNode = {id: "C", fixed: true, transitions: [], x: 450, y:250, type: "ofSwitch", type: "helpImage"};
 //graph.addNodewithData(newNode);
 //graph.addLink("A", "B");
 var n = graph.getNodes();
 console.log(n);
+
+function createSwitches(){
+    divPos = { x: 200, y:200};
+    createofSwitch(divPos);
+    divPos = { x: 400, y:200};
+    createofSwitch(divPos);
+}
 
 //linkMgt(graph);
 

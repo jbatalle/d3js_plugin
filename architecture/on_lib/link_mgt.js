@@ -57,7 +57,8 @@ function nodeMouseUp(d) {
     selected_node = null;
     
     if( links.filter(function (l) { return (l.source === source && l.target === target); }).length > 0) return;
-    graph.addLink(source.id, target.id);
+//    graph.addLink(source.id, target.id);
+    graph.addLinkBetweenPorts(source.id, target.id);
 console.log(links);
     //            updateLinks();
 

@@ -71,6 +71,10 @@ function createofSwitch(divPos) {
     ofSw.id = name;
     ofSw.setX(divPos.x);
     ofSw.setY(divPos.y);
+    var ports = [{"id": ofSw.id+"1", "name": "ge-0/1", x: (ofSw.x+45), y: (ofSw.x+12), posx: 23, posy: 12, parent: ofSw.id},
+	             {"id": ofSw.id+"2", "name": "ge-2/1", x: (ofSw.x+45), y: (ofSw.y+12), posx: 45, posy: 12, parent: ofSw.id}];
+    ofSw.setPorts(ports);
+    console.log(ofSw);
     graph.addNodewithData(ofSw);
 }
 

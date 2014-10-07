@@ -10,7 +10,6 @@
 addJSFile('models/elements.js');
 
 var startState, endState, drag_line;
-var drag_line;
 
 function myGraph(el) {
      
@@ -32,6 +31,13 @@ function myGraph(el) {
         update();
     }
  
+    this.addPortsToNode = function (nodeId, data) {
+        n = findNode(nodeId);
+            n.ports = data;
+        ports.push = data;
+        update();
+    }
+    
     this.removeNode = function (id) {
         var i = 0,
             n = findNode(id);
@@ -44,8 +50,21 @@ function myGraph(el) {
     }
  
     this.addLink = function (source, target) {
-console.log("add link");        
+console.log("add link");
+        console.log(findNode(source));
+        
         links.push({id: source+"-"+target, source:findNode(source), target:findNode(target)});
+        console.log(links);
+        update();
+    }
+    
+    this.addLinkBetweenPorts = function (source, target) {
+        console.log(nodes);
+        update();
+console.log("add link between ports");
+        console.log(findPortNode(source));
+//        links.push({id: source+"-"+target, source:findNode(source), target:findNode(target)});
+        links.push({id: source+"-"+target, source:findPortNode(source), target:findPortNode(target)});
         console.log(links);
         update();
     }
@@ -57,6 +76,23 @@ console.log("add link");
  
     var findNode = function(id) {
         for (var i in nodes) {if (nodes[i]["id"] === id) return nodes[i]};
+    }
+    
+    var findNodeGivenPort = function(id) {
+        for (var i in nodes) {
+            for (var j in nodes[i].ports) {
+                console.log(nodes[i].ports[j]);
+                if (nodes[i].ports[j]["id"] === id) return nodes[i];
+            };
+        }
+    }
+    
+    var findPortNode = function(id) {
+        for (var i in nodes) {
+            for (var j in nodes[i].ports) {
+                if (nodes[i].ports[j]["id"] === id) return nodes[i].ports[j];
+            };
+        }
     }
     
     var findLink = function(id) {
@@ -134,7 +170,7 @@ console.log("add link");
             .attr("x1", function(d) { return d.source.x; })
             .attr("y1", function(d) { return d.source.y; })
             .attr("x2", function(d) { return d.target.x; })
-            .attr("y2", function(d) { return d.target.y; })
+            .attr("y2", function(d) { return d.target.y; });
         
         link.exit().remove();
  
@@ -147,9 +183,9 @@ console.log("add link");
             .attr("py", function (d) {return d.y;})
             .on("mousedown", function(d){
                 if (!ctrlKey) {
-                    startState =d, endState = undefined;
+//                    startState =d, endState = undefined;
                     // reposition drag line
-                    nodeMouseDown(d);
+//                    nodeMouseDown(d);
                 }
             })
             .on('mouseover', function (d) {
@@ -174,9 +210,44 @@ console.log("add link");
             .attr("dy", ".35em")
             .text(function(d) {return d.id});
 
+        var portsTest = nodeEnter.append("g").attr("id", "ports").selectAll("g.ports")
+            .data(function(d){ return d.ports;});
+        
+        portsTest
+            .enter().append("circle")
+                .attr("id",function(d){ return d.id;}) 
+                .attr("cx", function(d){ console.log("Circle POSITION: "+d.posx); return d.posx;})
+                .attr("cy", function(d){ return d.posy;})
+                .attr("r", function(d) { return 7; })
+            .on("mousedown", function(d){
+                if (!ctrlKey) {
+                    console.log("Click on port "+d.name);
+                    var parentNode = graph.getNodes().filter(function (p) { return d.parent == p.id})[0];
+console.log(parentNode.x);
+                    console.log(d.x);
+                    startState = d, endState = undefined;
+                    
+                    startState = node;
+console.log("Change X "+(parentNode.x+d.posx));                    
+                    startState.x = (parentNode.x+d.posx);
+                    startState.y = (parentNode.y+d.posy);
+                    startState.transitions = [];
+                    nodeMouseDown(startState);
+                    console.log(startState);
+                }
+            }).on("mouseup", function(d){
+                    nodeMouseDown(startState);
+            });
+        
+        portsTest.exit().remove();
+console.log("update....");
         nodeEnter.attr("transform", function (d) {
             return "translate(" + d.x + "," + d.y + ")";
         });
+        
+        portsTest.attr('x', function(d) { console.log("PORT TESSSSSSSSSSST"); console.log(d); return d.x; })
+                .attr('y', function(d) { return d.y; });
+        
         
         node.exit().remove();
  
@@ -187,6 +258,11 @@ console.log("add link");
             mousedown: function () {
                 console.log("Selection enabled");
                 if (d3.event.target.tagName == 'svg') {
+                    drag_line
+                        .classed('hidden', true)
+                        .style('marker-end', '');
+                        startState = undefined;
+                    console.log("Selected SVG");
                     if (!d3.event.ctrlKey) {
                         d3.selectAll('g.selected').classed("selected", false);
                     }
@@ -283,12 +359,9 @@ console.log("add link");
         /* END Multi selection */
         
         force.on("tick", function() {
-          link.attr("x1", function(d) { return d.source.x; })
-              .attr("y1", function(d) { return d.source.y; })
-              .attr("x2", function(d) { return d.target.x; })
-              .attr("y2", function(d) { return d.target.y; });
+          
  
-          //node.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+          node.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
         });
  
         // Restart the force layout.
