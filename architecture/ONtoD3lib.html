@@ -5,7 +5,7 @@
         <title>OpenNaaS Library</title>
         
         <script type="text/javascript" src="external/jquery.min.js"></script>
-        <script type="text/javascript" src="http://code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
+        <script type="text/javascript" src="external/jquery-ui.js"></script>
         <script type="text/javascript" src="external/d3.v3.min.js"></script>
         <script type="text/javascript" src="ONtoD3lib.js"></script>
         <script type="text/javascript" src="on_lib/script_html.js"></script>
@@ -44,10 +44,13 @@
         <a href="javascript:createNetworkElement()">Add new netowkrElement</a>  
         <a href="javascript:getNetworkElements()">Get networkELements</a>  
         <a href="javascript:graph.addNode('B');">Add Node B</a>
-        <a href="javascript:graph.addNode('C');">Add Node C</a>
         <a href="javascript:graph.removeNode('B');">Del Node</a>
         <a href="javascript:graph.addLink('A', 'B');">Add Link</a>
         <a href="javascript:createSwitch();">Create Switch</a>
+        <a href="javascript:graph.addLink('ofSw0', 'ofSw1');">Add Link</a>
+        <a href="javascript:graph.addLinkBetweenPorts('ofSw02', 'ofSw12', 'c');">Add Link</a>
+        <a href="javascript:createSwitches();">Create Switches</a>
+        <a href="javascript:console.log(graph.getNodes());">Get Nodes</a>
         
         
         <script type="text/javascript" src="draw_lib_execution.js"></script>
