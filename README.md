@@ -21,11 +21,11 @@ lib <--> genericTemplate (onMouseDown) <--> depends on the node type (proxy?) <-
 
 Guide:
 
--> external --> external libraries
--> img --> Images
--> models --> Models of data
--> on_lib --> OpenNaaS library. Required for OpenNaaS GUI. Multi-select, port management, link management...
--> ONtoD3lib.css --> Css
--> ONtoD3lib.html --> Basic html template
--> ONtoD3lib.js --> Basic javascript functions. (To delete?)
+- external --> external libraries
+- img --> Images
+- models --> Models of data
+- on_lib --> OpenNaaS library. Required for OpenNaaS GUI. Multi-select, port management, link management...
+- ONtoD3lib.css --> Css
+- ONtoD3lib.html --> Basic html template
+- ONtoD3lib.js --> Basic javascript functions. (To delete?)
 
