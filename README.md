@@ -4,7 +4,7 @@ d3js_plugin
 TODO:
  - Selection. First 5 seconds doesn't work
  - Create links with drag (1/2). Put mode type
- - Add ports
+ - Add ports (1/2)
  - Add modes (create links, selection...)
  - Simplify the core, externalize more functions
  - Create the html architecture
