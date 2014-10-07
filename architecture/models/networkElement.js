@@ -9,9 +9,11 @@ function NetworkElement(name, data) {
     this.name = name;
     this.type;
     this.data = data;
-    this.ports = {};
+    this.ports = [];
     this.x;
     this.y;
+    this.posx;
+    this.posy;
 }
 
 NetworkElement.prototype = {
@@ -29,5 +31,8 @@ NetworkElement.prototype = {
     },
     setY: function(y){
         this.y = y;
+    },
+    setPorts: function(ports){
+	   this.ports = ports;
     }
 };

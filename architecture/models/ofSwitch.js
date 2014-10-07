@@ -6,7 +6,6 @@ function ofSwitch(dpid) {
     this.type = "ofSwitch";
     this.width = "60px";
     this.height = "60px";
-    this.ports = {};
 
     NetworkElement.call(this, dpid, this.data);
 }
@@ -14,5 +13,7 @@ function ofSwitch(dpid) {
 ofSwitch.prototype = {
     getPorts: function(){
         return this.ports;
+    },setPorts: function(ports){
+	this.ports = ports;
     }
 };
