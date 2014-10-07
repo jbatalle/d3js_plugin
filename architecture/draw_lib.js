@@ -192,7 +192,7 @@ console.log("add link between ports");
 
             })
             .on('mouseup', function (d) {
-                nodeMouseUp(d);
+//                nodeMouseUp(d);
             })
             .call(drag);
         
@@ -223,11 +223,10 @@ console.log("add link between ports");
                 if (!ctrlKey) {
                     console.log("Click on port "+d.name);
                     var parentNode = graph.getNodes().filter(function (p) { return d.parent == p.id})[0];
-console.log(parentNode.x);
-                    console.log(d.x);
+console.log(node);
                     startState = d, endState = undefined;
                     
-                    startState = node;
+                    //startState = node;
 console.log("Change X "+(parentNode.x+d.posx));                    
                     startState.x = (parentNode.x+d.posx);
                     startState.y = (parentNode.y+d.posy);
@@ -236,7 +235,7 @@ console.log("Change X "+(parentNode.x+d.posx));
                     console.log(startState);
                 }
             }).on("mouseup", function(d){
-                    nodeMouseDown(startState);
+                    nodeMouseUp(d);
             });
         
         portsTest.exit().remove();
@@ -245,7 +244,7 @@ console.log("update....");
             return "translate(" + d.x + "," + d.y + ")";
         });
         
-        portsTest.attr('x', function(d) { console.log("PORT TESSSSSSSSSSST"); console.log(d); return d.x; })
+        portsTest.attr('x', function(d) { return d.x; })
                 .attr('y', function(d) { return d.y; });
         
         
