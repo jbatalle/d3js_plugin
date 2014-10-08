@@ -15,6 +15,10 @@ TODO:
 
 -----
 
+ - Text position
+ - Mouseover port show name
+ - Port position as a variable (depends on the tempalte/model)
+
 lib <--> genericTemplate (onMouseDown) <--> depends on the node type (proxy?) <--> call specific function
 
 
