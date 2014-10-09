@@ -34,7 +34,7 @@ $(function () {
             };
 
             createElement(nodeType, divPos);
-            showInfoMessage();
+            
             //$("#"+nodeType").remove();
         }
     });
@@ -46,6 +46,11 @@ function createElement(type, divPos) {
     switch (type) {
     case "ofSwitch":
         createofSwitch(divPos);
+        showInfoMessage("Element added");
+        break;
+    case "router":
+        createRouter(divPos);
+        showInfoMessage("Element added");
         break;
     case "ofController":
         createofController(divPos);
@@ -65,39 +70,67 @@ function createElement(type, divPos) {
 }
 
 function createofSwitch(divPos) {
-    ofSwitch.prototype = new NetworkElement();
+    OfSwitch.prototype = new NetworkElement();
+    OfSwitch.prototype.constructor = OfSwitch;
     var name = "ofSw" + graph.getNodes().length;
-    var ofSw = new ofSwitch(name);
+    var ofSw = new OfSwitch(name);
+    console.log(ofSw);
+    console.log(ofSw instanceof NetworkElement);
+    console.log(ofSw.getPorts());
     ofSw.id = name;
     ofSw.setX(divPos.x);
     ofSw.setY(divPos.y);
-    var ports = [{"id": ofSw.id+"1", "name": "ge-0/1", x: (ofSw.x-23), y: (ofSw.x+12), posx: -23, posy: 12, parent: ofSw.id},
-	             {"id": ofSw.id+"2", "name": "ge-2/1", x: (ofSw.x+45), y: (ofSw.y+12), posx: 45, posy: 12, parent: ofSw.id}];
-    ofSw.setPorts(ports);
+    //var ports = [{"id": ofSw.id+"1", "name": "ge-0/1", x: (ofSw.x-23), y: (ofSw.x+12), posx: -23, posy: 12, parent: ofSw.id},
+	   //          {"id": ofSw.id+"2", "name": "ge-2/1", x: (ofSw.x+45), y: (ofSw.y+12), posx: 45, posy: 12, parent: ofSw.id}];
+    //ofSw.setPorts(ports);
     console.log(ofSw);
     graph.addNodewithData(ofSw);
 }
 
-function showInfoMessage(){
+function createRouter(divPos) {
+    Router.prototype = new NetworkElement();
+    Router.prototype.constructor = Router;
+    var name = "ofSw" + graph.getNodes().length;
+    var router = new Router(name);
+    console.log(router);
+    console.log(router instanceof NetworkElement);
+    console.log(router.getPorts());
+    router.id = name;
+    router.setX(divPos.x);
+    router.setY(divPos.y);
+    console.log(router);
+    graph.addNodewithData(router);
+}
+
+function showInfoMessage(message){
+    document.getElementById("info_message_text").innerHTML = message;
     $("#info_message").show();
     setInterval(function () { $("#info_message").hide();}, 3000);
 }
 
-function showErrorMessage(){
+function showErrorMessage(message){
+    document.getElementById("error_message_text").innerHTML = message;
     $("#error_message").show();
     setInterval(function () { $("#error_message").hide();}, 3000);
 }
 
 function createLaptop(){
-    showErrorMessage();
+    showErrorMessage("Element not defined");
 }
 
 function createStencil(){
+    console.log(graphImage);
 	var stencilDiv = document.getElementById("stencil");
-	el = generateHtmlDivElement("ofSwitch");
+    for (key in graphImage) {
+        console.log(key);
+        el = generateHtmlDivElement(key);
+	   stencilDiv.appendChild(el);
+}
+/*	el = generateHtmlDivElement("ofSwitch");
 	stencilDiv.appendChild(el);
     el = generateHtmlDivElement("laptop");
 	stencilDiv.appendChild(el);
+*/
 }
 
 function generateHtmlDivElement(type){
