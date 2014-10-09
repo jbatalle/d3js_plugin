@@ -2,6 +2,7 @@ d3js_plugin
 ===========
 
 TODO:
+-----
  - Selection. First 5 seconds doesn't work
  - Create links with drag (1/2). Put mode type
  - Add ports (1/2)
@@ -19,12 +20,13 @@ TODO:
  - Mouseover port show name
  - Port position as a variable (depends on the tempalte/model)
  - Add ports to created element
+ - When 
 
 lib <--> genericTemplate (onMouseDown) <--> depends on the node type (proxy?) <--> call specific function
 
 
-
 Guide:
+--------------
 
 - external --> external libraries
 - img --> Images
