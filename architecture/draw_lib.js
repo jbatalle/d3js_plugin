@@ -206,8 +206,8 @@ console.log("add link between ports");
  
         nodeEnter.append("text")
             .attr("class", "nodetext")
-            .attr("dx", 12)
-            .attr("dy", ".35em")
+            .attr("dx", function(d){ return d.text_x})
+            .attr("dy", function(d){ return d.text_y})
             .text(function(d) {return d.id});
 
         var portsTest = nodeEnter.append("g").attr("id", "ports").selectAll("g.ports")

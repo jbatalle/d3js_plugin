@@ -15,9 +15,10 @@ TODO:
 
 -----
 
- - Text position
+ - Text position <img width="20" src="http://www.clipartbest.com/cliparts/dT8/5e6/dT85e6aqc.png"/>
  - Mouseover port show name
  - Port position as a variable (depends on the tempalte/model)
+ - Add ports to created element
 
 lib <--> genericTemplate (onMouseDown) <--> depends on the node type (proxy?) <--> call specific function
 

@@ -6,6 +6,8 @@ function ofSwitch(dpid) {
     this.type = "ofSwitch";
     this.width = "60px";
     this.height = "60px";
+    this.text_x = 0;
+    this.text_y = 40;
 
     NetworkElement.call(this, dpid, this.data);
 }
