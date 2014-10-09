@@ -19,9 +19,9 @@ function createSwitches(){
 
 function createSwitch(){
     defaultSwitches();
-    ofSwitch.prototype = new NetworkElement();
+    OfSwitch.prototype = new NetworkElement();
     var name = "00:0"+ graph.getNodes().length;
-    var ofSw = new ofSwitch(name);
+    var ofSw = new OfSwitch(name);
     ofSw.id = name;
     ofSw.setX(100*graph.getNodes().length);
     ofSw.setY(350);
@@ -29,17 +29,17 @@ function createSwitch(){
 }
 
 function defaultSwitches(){
-    ofSwitch.prototype = new NetworkElement();
+    OfSwitch.prototype = new NetworkElement();
     var name = "00:0"+ graph.getNodes().length;
-    var ofSw = new ofSwitch(name);
+    var ofSw = new OfSwitch(name);
     ofSw.id = name;
     ofSw.setX(150);
     ofSw.setY(250);
     graph.addNodewithData(ofSw);
     
-    ofSwitch.prototype = new NetworkElement();
+    OfSwitch.prototype = new NetworkElement();
     name = "00:0"+ graph.getNodes().length;
-    ofSw = new ofSwitch(name);
+    ofSw = new OfSwitch(name);
     ofSw.id = name;
     ofSw.setX(250);
     ofSw.setY(250);

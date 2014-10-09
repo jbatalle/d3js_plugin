@@ -3,13 +3,14 @@
 */
 
 addJSFile('models/ports.js');
-addJSFile('models/ofSwitch.js');
+addJSFile('models/OfSwitch.js');
+addJSFile('models/Router.js');
 
-function NetworkElement(name, data) {
+function NetworkElement(name, data, ports) {
     this.name = name;
     this.type;
     this.data = data;
-    this.ports = [];
+    this.ports = ports;//[]
     this.x;
     this.y;
     this.posx;
@@ -34,5 +35,8 @@ NetworkElement.prototype = {
     },
     setPorts: function(ports){
 	   this.ports = ports;
+    },
+    getPorts: function(){
+	   return this.ports;
     }
 };
