@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>OpenNaaS Library</title>
+
+        <script type="text/javascript" src="../plugin/external/jquery.min.js"></script>
+        <script type="text/javascript" src="../plugin/external/jquery-ui.js"></script>
+        <script type="text/javascript" src="../plugin/external/d3.v3.min.js"></script>
+        <script type="text/javascript" src="../plugin/ONtoD3lib.js"></script>
+        <script type="text/javascript" src="../plugin/on_lib/script_html.js"></script>
+        <script type="text/javascript" src="../plugin/on_lib/initial_vars.js"></script>
+        <script type="text/javascript" src="../plugin/on_lib/multiselect.js"></script>
+        <script type="text/javascript" src="../plugin/on_lib/link_mgt.js"></script>
+        <script type="text/javascript" src="../plugin/draw_lib.js"></script>
+        <script type="text/javascript" src="../plugin/external/xml2json.js"/>"></script>
+
+        <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/smoothness/jquery-ui.css" />
+        <link rel="stylesheet" type="text/css" media="screen" href="../plugin/ONtoD3lib.css">
+    </head>
+    <body>
+        <div id="container">
+
+            <div id="graph" >
+                <div id="info_message" class="ui-widget" style="display:none; position:absolute; width: 78%">
+                    <div class="ui-state-highlight ui-corner-all" style="padding: 0 .7em;">
+                        <p>
+                            <span class="ui-icon ui-icon-check" style="float: left; margin-right: .3em;"></span>
+                            <strong>Info:</strong> <div id="info_message_text"></div>
+                        </p>
+                    </div>
+                </div>
+                <div id="error_message" class="ui-widget" style="display:none; position:absolute; width: 78%">
+                    <div class="ui-state-error ui-corner-all" style="padding: 0 .7em;">
+                        <p>
+                            <span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span>
+                            <strong>Alert:</strong> <div id="error_message_text"></div>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br/><br/><br/>
+
+        <a href="javascript:drawTopology()">drawTopology(json);</a>
+
+
+        <script type="text/javascript" src="view_draw_lib_execution.js"></script>
+    </body>
+</html>
+
