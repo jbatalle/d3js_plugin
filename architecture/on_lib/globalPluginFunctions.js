@@ -35,3 +35,9 @@ function resetMouseVars() {
     mouseup_node = null;
     mousedown_link = null;
 }
+
+function convertXml2JSon(xml) {
+    var x2js = new X2JS();
+    return JSON.stringify(x2js.xml_str2json(xml));
+}
+
