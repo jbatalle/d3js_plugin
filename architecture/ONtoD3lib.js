@@ -9,54 +9,23 @@ maintain the topolgy definition (json), allows to add, get or remove elements.
 /*
 addJSFile('templates.js');
 */
-var topology = [];
 
-function canvasSize(x, y){
-    
+/******* D3 JS Functions *******/
+function keyup() {
+  ctrlKey = false;
 }
 
-function getTopology(){
-    return topology;
+function keydown() {
+  ctrlKey = d3.event.ctrlKey || d3.event.metaKey;
 }
 
-function createElement(type){
-    
-    
+function resetMouseVars() {
+    mousedown_node = null;
+    mouseup_node = null;
+    mousedown_link = null;
 }
 
-
-function createNetworkElement(){
-    var netE = new NetworkElement();
-    console.log(netE);
-    topology.push(netE);
-}
-
-function createDomain(){
-    
-}
-
-function createNetwork(){
-    
-}
-
-function getNetworkElements(){
-    console.log(topology);
-    return topology;
-}
-
-
-function removeNetworkElement(){
-    
-}
-
-function removeDomain(){
-    
-}
-
-function removeNetwork(){
-    
-}
-
+/***** Javascriot management  **/
 /*
 * Add a new Javascript file in the html
 */
@@ -74,6 +43,28 @@ function addJavascript(jsname, pos) {
     th.appendChild(s);
 }
 
+function convertXml2JSon(xml) {
+    var x2js = new X2JS();
+    return JSON.stringify(x2js.xml_str2json(xml));
+}
+
+/**
+ * Move element of array from src to dst.
+ * @param {type} arr
+ * @param {type} fromIndex
+ * @param {type} toIndex
+ * @returns {Array|arraymove.arr}
+ */
+function arraymove(arr, fromIndex, toIndex) {
+    var element = arr[fromIndex];
+    arr.splice(fromIndex, 1);
+    arr.splice(toIndex, 0, element);
+    return arr;
+}
+
+
+
+/******* Network functions ******/
 function ip2long(ip){
     var components;
     var regex = /^(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})$/;
@@ -105,18 +96,5 @@ function ValidateIPaddress(ipaddress){
         return true;
     }
     return false;
-}  
-
-/**
- * Move element of array from src to dst.
- * @param {type} arr
- * @param {type} fromIndex
- * @param {type} toIndex
- * @returns {Array|arraymove.arr}
- */
-function arraymove(arr, fromIndex, toIndex) {
-    var element = arr[fromIndex];
-    arr.splice(fromIndex, 1);
-    arr.splice(toIndex, 0, element);
-    return arr;
 }
+

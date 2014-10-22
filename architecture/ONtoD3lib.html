@@ -3,13 +3,12 @@
     <head>
         <meta charset="utf-8">
         <title>OpenNaaS Library</title>
-        
+
         <script type="text/javascript" src="external/jquery.min.js"></script>
         <script type="text/javascript" src="external/jquery-ui.js"></script>
         <script type="text/javascript" src="external/d3.v3.min.js"></script>
         <script type="text/javascript" src="ONtoD3lib.js"></script>
         <script type="text/javascript" src="on_lib/script_html.js"></script>
-        <script type="text/javascript" src="on_lib/globalPluginFunctions.js"></script>
         <script type="text/javascript" src="on_lib/multiselect.js"></script>
         <script type="text/javascript" src="on_lib/link_mgt.js"></script>
         <script type="text/javascript" src="draw_lib.js"></script>
@@ -23,7 +22,7 @@
             <div id="stencil"></div>
             <div id="graph" >
                 <div id="info_message" class="ui-widget" style="display:none; position:absolute; width: 78%">
-                    <div class="ui-state-highlight ui-corner-all" style="padding: 0 .7em;"> 
+                    <div class="ui-state-highlight ui-corner-all" style="padding: 0 .7em;">
                         <p>
                             <span class="ui-icon ui-icon-check" style="float: left; margin-right: .3em;"></span>
                             <strong>Info:</strong> <div id="info_message_text"></div>
@@ -31,7 +30,7 @@
                     </div>
                 </div>
                 <div id="error_message" class="ui-widget" style="display:none; position:absolute; width: 78%">
-                    <div class="ui-state-error ui-corner-all" style="padding: 0 .7em;"> 
+                    <div class="ui-state-error ui-corner-all" style="padding: 0 .7em;">
                         <p>
                             <span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span>
                             <strong>Alert:</strong> <div id="error_message_text"></div>
@@ -42,8 +41,8 @@
         </div>
         <br/><br/><br/>
 
-        <a href="javascript:createNetworkElement()">Add new netowkrElement</a>  
-        <a href="javascript:getNetworkElements()">Get networkELements</a>  
+        <a href="javascript:createNetworkElement()">Add new netowkrElement</a>
+        <a href="javascript:getNetworkElements()">Get networkELements</a>
         <a href="javascript:graph.addNode('B');">Add Node B</a>
         <a href="javascript:graph.removeNode('B');">Del Node</a>
         <a href="javascript:graph.addLink('A', 'B');">Add Link</a>
@@ -53,8 +52,9 @@
         <a href="javascript:createSwitches();">Create Switches</a>
         <a href="javascript:console.log(graph.getNodes());">Get Nodes</a>
 		<a href="javascript:drawTopology()">drawTopology(json);</a>
-        
-        
+
+
         <script type="text/javascript" src="draw_lib_execution.js"></script>
     </body>
 </html>
+

@@ -22,22 +22,3 @@ d3.select(window)
     .on('keydown', keydown)
     .on('keyup', keyup);
 
-function keyup() {
-  ctrlKey = false;
-}
-
-function keydown() {
-  ctrlKey = d3.event.ctrlKey || d3.event.metaKey;
-}
-
-function resetMouseVars() {
-    mousedown_node = null;
-    mouseup_node = null;
-    mousedown_link = null;
-}
-
-function convertXml2JSon(xml) {
-    var x2js = new X2JS();
-    return JSON.stringify(x2js.xml_str2json(xml));
-}
-
