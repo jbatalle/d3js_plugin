@@ -2,9 +2,9 @@
 * Other network elements are based on this.
 */
 
-addJSFile('models/ports.js');
-addJSFile('models/OfSwitch.js');
-addJSFile('models/Router.js');
+addJSFile('../plugin/models/ports.js');
+addJSFile('../plugin/models/OfSwitch.js');
+addJSFile('../plugin/models/Router.js');
 
 function NetworkElement(name, data, ports) {
     this.name = name;

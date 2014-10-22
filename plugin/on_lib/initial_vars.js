@@ -1,3 +1,5 @@
+var plugin_path = "../plugin/";
+
 var info_message, error_message;
 var graph,
     selected_node = null,
@@ -9,11 +11,12 @@ var graph,
 
 //Node images. The key option of the map is the node type defined in each model of data
 var graphImage = {};
-graphImage["ofSwitch"] =        "img/ofSwitch.png";
-graphImage["router"] =        "img/router.png";
-graphImage["ofController"] =    "img/ofController.png";
-graphImage["laptop"] =    "img/laptop.png";
-graphImage["helpImage"] =       "img/helpImage.png";
+
+graphImage["ofSwitch"] =        plugin_path+"img/ofSwitch.png";
+graphImage["router"] =        plugin_path+"img/router.png";
+graphImage["ofController"] =    plugin_path+"img/ofController.png";
+graphImage["laptop"] =    plugin_path+"img/laptop.png";
+graphImage["helpImage"] =       plugin_path+"img/helpImage.png";
 
 //Editor options
 var multiSelectMode = false;

@@ -3,9 +3,9 @@ var stencil_image_width = 60;//px
 $(function () {
     /* Information message */
     $(".ui-widget").hide();
-    
+
     /* END Information message */
-    
+
     /* Stencil - Images draggables to d3js */
     $(".netEl-drag").draggable({
         helper: "clone"
@@ -34,7 +34,7 @@ $(function () {
             };
 
             createElement(nodeType, divPos);
-            
+
             //$("#"+nodeType").remove();
         }
     });
@@ -66,7 +66,7 @@ function createElement(type, divPos) {
         console.log("Element not defined");
         return;
     }
-    
+
 }
 
 function createofSwitch(divPos) {
@@ -135,7 +135,7 @@ function createStencil(){
 
 function generateHtmlDivElement(type){
 	var imgEl = document.createElement("img");
-	imgEl.src = "img/"+type+".png";
+	imgEl.src = graphImage[type];
     imgEl.width = stencil_image_width;
 	var el = document.createElement("div");
 	el.id = type;
@@ -143,3 +143,4 @@ function generateHtmlDivElement(type){
 	el.appendChild(imgEl);
 	return el;
 }
+
