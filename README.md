@@ -19,8 +19,8 @@ TODO:
  - Text position <img width="20" src="http://www.clipartbest.com/cliparts/dT8/5e6/dT85e6aqc.png"/>
  - Mouseover port show name
  - Port position as a variable (depends on the tempalte/model)
- - Add ports to created element
- - When 
+ - Add ports to created element (1/2). Position of ports, different from each element
+ - Disable multiselect rect when is disabled
 
 lib <--> genericTemplate (onMouseDown) <--> depends on the node type (proxy?) <--> call specific function
 
@@ -35,4 +35,5 @@ Guide:
 - ONtoD3lib.css --> Css
 - ONtoD3lib.html --> Basic html template
 - ONtoD3lib.js --> Basic javascript functions. (To delete?)
+- draw_lib_execution.js --> Contain automatic function calls. To remove in production
 

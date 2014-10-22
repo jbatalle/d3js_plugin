@@ -13,7 +13,8 @@
         <script type="text/javascript" src="on_lib/multiselect.js"></script>
         <script type="text/javascript" src="on_lib/link_mgt.js"></script>
         <script type="text/javascript" src="draw_lib.js"></script>
-        
+        <script type="text/javascript" src="external/xml2json.js"/>"></script>
+
         <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/smoothness/jquery-ui.css" />
         <link rel="stylesheet" type="text/css" media="screen" href="ONtoD3lib.css">
     </head>
@@ -51,6 +52,7 @@
         <a href="javascript:graph.addLinkBetweenPorts('ofSw02', 'ofSw12', 'c');">Add Link</a>
         <a href="javascript:createSwitches();">Create Switches</a>
         <a href="javascript:console.log(graph.getNodes());">Get Nodes</a>
+		<a href="javascript:drawTopology()">drawTopology(json);</a>
         
         
         <script type="text/javascript" src="draw_lib_execution.js"></script>

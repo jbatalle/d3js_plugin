@@ -378,3 +378,50 @@ function transform(d) {
 function updateNodes(){
     
 }
+
+function StaticForcealgorithm(nodes, edges){
+console.log(nodes);
+//var nodes = [{id:1, x: 10, y: 20, net_force: {}, velocity: {}}, {id:1, x: 40, y: 20, net_force: {}, velocity: {}}, {id:3, x: 10, y: 40, net_force: {}, velocity: {}}, {id:4, x: 40, y: 50, net_force: {}, velocity: {}} ];
+//var edges = [ [false, true], [true, false], [true, true]];
+
+//console.log(edges);
+    var n = nodes.length;
+    for(i=0; i < nodes.length; i++){ // loop through vertices
+        var v = nodes[i];
+        var u;
+        v.net_force.x = 0;
+        v.net_force.y = 0;
+        for(j=0; j < n; j++){ // loop through other vertices
+             if(i==j)continue;
+             u = nodes[j];
+             // squared distance between "u" and "v" in 2D space
+             var rsq = ((v.x-u.x)*(v.x-u.x)+(v.y-u.y)*(v.y-u.y));
+             // counting the repulsion between two vertices
+             v.net_force.x += 200 * (v.x-u.x) /rsq;
+             v.net_force.y += 100 * (v.y-u.y) /rsq;
+        }
+        for(j=0; j < n; j++){ // loop through edges
+             //if(!edges[i][j])continue;
+
+             u = nodes[j];
+             // countin the attraction
+             v.net_force.x += 0.06*(u.x - v.x);
+             v.net_force.y += 0.06*(u.y - v.y);
+        }
+        // counting the velocity (with damping 0.85)
+        v.velocity.x = (v.velocity.x + v.net_force.x)*0.85;
+        v.velocity.y = (v.velocity.y + v.net_force.y)*0.85;
+   }
+   for(i=0; i < n; i++){ // set new positions
+        v = nodes[i];
+        if(v.isDragged){
+            v.x = mouseX; v.y = mouseY;
+        }
+        else {
+            v.x += v.velocity.x;
+            v.y += v.velocity.y;
+       }
+   }
+return nodes;
+}
+
