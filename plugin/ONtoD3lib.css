@@ -25,12 +25,11 @@
 
 
 /* Stencil CSS */
-#stencil { width:200px;height:500px; border:3px solid black;border-radius:12px; margin:auto; float: left;}
+#stencil { width: 200px; height:500px; border:3px solid black; border-radius:12px; margin:auto; float: left;}
 /* D3JS graph */
-#graph { width:80%; height:500px; border:3px solid black;border-radius:12px; margin:auto; float: left}
+#graph { width: 80%; height:500px; border:3px solid black; border-radius:12px; margin:auto; float: left}
 
 /* ------------------------------------------------------ */
-
 .node rect {
   fill: #cfcfcf;
   stroke: #caeeff;
@@ -39,32 +38,31 @@
 
 .link { stroke: #ccc; stroke-width: 6px;}
 .nodetext { pointer-events: none; font: 10px sans-serif; }
-body { width:100%; height:100%; margin:none; padding:none; }
+body { width: 100%; height: 100%; margin: none; padding: none; }
 
 /** Selection CSS **/
-
 rect.selection {
-    stroke          : gray;
+    stroke: gray;
     stroke-dasharray: 2px;
-    stroke-opacity  : 0.5;
-    fill            : transparent;
+    stroke-opacity: 0.5;
+    fill: transparent;
 }
 
 g.state text {
-    font                : 12px sans-serif;
-    font-weight         : bold;
-    pointer-events      : none;
+    font: 12px sans-serif;
+    font-weight: bold;
+    pointer-events: none;
 }
 
 g.transition path,
 path.dragline {
-    fill        : none;
-    stroke      : gray;
+    fill: none;
+    stroke: gray;
     stroke-width: 3px;
 }
 
 g.transition path.foreground {
-    marker-end  : url(#end-arrow);
+    marker-end: url(#end-arrow);
 }
 
 g.transition.hover path.background {
@@ -85,7 +83,6 @@ g.transition.selected path.foreground {
     stroke-color    : gray;
 }
 
-
 g.transition path {
     cursor : default;
 }
@@ -95,19 +92,17 @@ g.transition path {
     stroke-width    : 1px;
 }
 
-g.transition:not( .selected).hover *,
-path.dragline {
-    display         : inline;
-    
+g.transition:not( .selected).hover *, path.dragline {
+    display: inline;
 }
 
 g.transition:not( .selected).hover {
-    transition      : all 0.5s;
+    transition: all 0.5s;
 }
 
 path.dragline {
     pointer-events: none;
-    stroke-opacity  : 0.5;
+    stroke-opacity: 0.5;
     stroke-dasharray: 4px;
 }
 
@@ -115,24 +110,24 @@ path.dragline.hidden {
     stroke-width: 0;
 }
 
-    /* disable text selection */
+/* disable text selection */
 svg *::selection {
-    background : transparent;
+    background: transparent;
 }
 
 svg *::-moz-selection {
-    background:transparent;
+    background: transparent;
 }
 
 svg *::-webkit-selection {
-    background:transparent;
+    background: transparent;
 }
-
 
 /* Information messages JQUERY ui */
 p{
-    margin: 1em 0;   
+    margin: 1em 0;
 }
 strong {
-    font-weight: 900;   
+    font-weight: 900;
 }
+
