@@ -41,11 +41,14 @@ $(function () {
     /* END Stencil - Images draggables to d3js */
 });
 
-function createElement(type, divPos) {
+function createElement(type, divPos, data) {
     console.log("Create element " + type + " " + divPos);
     switch (type) {
     case "ofSwitch":
-        createofSwitch(divPos);
+        if( jQuery.isEmptyObject(data) )
+            createofSwitch(divPos);
+        else
+            createofSwitchwithData(divPos, data);
         showInfoMessage("Element added");
         break;
     case "router":
@@ -83,6 +86,21 @@ function createofSwitch(divPos) {
     //var ports = [{"id": ofSw.id+"1", "name": "ge-0/1", x: (ofSw.x-23), y: (ofSw.x+12), posx: -23, posy: 12, parent: ofSw.id},
 	   //          {"id": ofSw.id+"2", "name": "ge-2/1", x: (ofSw.x+45), y: (ofSw.y+12), posx: 45, posy: 12, parent: ofSw.id}];
     //ofSw.setPorts(ports);
+    console.log(ofSw);
+    graph.addNodewithData(ofSw);
+}
+function createofSwitchwithData(divPos, data) {
+    OfSwitch.prototype = new NetworkElement();
+    OfSwitch.prototype.constructor = OfSwitch;
+    var name = data.id;
+    var ofSw = new OfSwitch(name);
+    console.log(ofSw);
+    console.log(ofSw instanceof NetworkElement);
+    console.log(ofSw.getPorts());
+    ofSw.id = data.id;
+    ofSw.setX(divPos.x);
+    ofSw.setY(divPos.y);
+    ofSw.setPorts(data.ports, ofSw.id);
     console.log(ofSw);
     graph.addNodewithData(ofSw);
 }
@@ -136,7 +154,7 @@ function createStencil(){
 function generateHtmlDivElement(type){
 	var imgEl = document.createElement("img");
 	imgEl.src = graphImage[type];
-    imgEl.width = stencil_image_width;
+	imgEl.width = stencil_image_width;
 	var el = document.createElement("div");
 	el.id = type;
 	el.className = "ui-widget-content netEl-drag";
