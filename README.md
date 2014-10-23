@@ -31,9 +31,9 @@ Guide:
 - external --> external libraries
 - img --> Images
 - models --> Models of data
-- on_lib --> OpenNaaS library. Required for OpenNaaS GUI. Multi-select, port management, link management...
+- on_lib --> OpenNaaS library. Required for OpenNaaS GUI. Multi-select, port management, link management, initial_vars...
 - ONtoD3lib.css --> Css
 - ONtoD3lib.html --> Basic html template
-- ONtoD3lib.js --> Basic javascript functions. (To delete?)
+- ONtoD3lib.js --> Basic javascript functions.
 - draw_lib_execution.js --> Contain automatic function calls. To remove in production
 
