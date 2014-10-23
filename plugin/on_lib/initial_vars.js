@@ -16,7 +16,9 @@ graphImage["ofSwitch"] =        plugin_path+"img/ofSwitch.png";
 graphImage["router"] =        plugin_path+"img/router.png";
 graphImage["ofController"] =    plugin_path+"img/ofController.png";
 graphImage["laptop"] =    plugin_path+"img/laptop.png";
-graphImage["helpImage"] =       plugin_path+"img/helpImage.png";
+
+var genericImages = {};
+genericImages["helpImage"] = plugin_path+"img/helpImage.png";
 
 //Editor options
 var multiSelectMode = false;
