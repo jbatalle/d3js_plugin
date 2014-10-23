@@ -216,7 +216,7 @@ console.log("add link between ports");
         portsTest
             .enter().append("circle")
                 .attr("id",function(d){ return d.id;})
-                .attr("cx", function(d){ console.log("Circle POSITION: "+d.posx); return d.posx;})
+                .attr("cx", function(d){ return d.posx;})
                 .attr("cy", function(d){ return d.posy;})
                 .attr("r", function(d) { return 7; })
             .on("mousedown", function(d){
@@ -239,7 +239,6 @@ console.log("Change X "+(parentNode.x+d.posx));
             });
 
         portsTest.exit().remove();
-console.log("update....");
         nodeEnter.attr("transform", function (d) {
             return "translate(" + d.x + "," + d.y + ")";
         });
@@ -381,10 +380,6 @@ function updateNodes(){
 
 function StaticForcealgorithm(nodes, edges){
 console.log(nodes);
-//var nodes = [{id:1, x: 10, y: 20, net_force: {}, velocity: {}}, {id:1, x: 40, y: 20, net_force: {}, velocity: {}}, {id:3, x: 10, y: 40, net_force: {}, velocity: {}}, {id:4, x: 40, y: 50, net_force: {}, velocity: {}} ];
-//var edges = [ [false, true], [true, false], [true, true]];
-
-//console.log(edges);
     var n = nodes.length;
     for(i=0; i < nodes.length; i++){ // loop through vertices
         var v = nodes[i];
