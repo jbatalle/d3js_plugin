@@ -4,9 +4,7 @@ console.log(graph.getHeight());
 //algorithm();
 
 var xmlTopology = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?> <ns2:topology xmlns:ns2="opennaas.api"> <networkElements> <networkElement xsi:type="switch" id="openflowswitch:s1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"> <state> <congested>false</congested> </state> <ports> <port id="s1.1"> <state> <congested>false</congested> </state> </port> <port id="s1.2"> <state> <congested>false</congested> </state> </port> <port id="s1.3"> <state> <congested>false</congested> </state> </port> <port id="s1.4"> <state> <congested>false</congested> </state> </port> </ports> </networkElement> <networkElement xsi:type="switch" id="openflowswitch:s2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"> <state> <congested>false</congested> </state> <ports> <port id="s2.1"> <state> <congested>false</congested> </state> </port> <port id="s2.2"> <state> <congested>false</congested> </state> </port> <port id="s2.3"> <state> <congested>false</congested> </state> </port> </ports> </networkElement> <networkElement xsi:type="switch" id="openflowswitch:s3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"> <state> <congested>false</congested> </state> <ports> <port id="s3.1"> <state> <congested>false</congested> </state> </port> <port id="s3.2"> <state> <congested>false</congested> </state> </port> <port id="s3.3"> <state> <congested>false</congested> </state> </port> <port id="s3.4"> <state> <congested>false</congested> </state> </port> </ports> </networkElement> </networkElements> <links> <link> <state> <congested>false</congested> </state> <srcPort>s1.1</srcPort> <dstPort>s2.1</dstPort> </link> <link> <state> <congested>false</congested> </state> <srcPort>s1.2</srcPort> <dstPort>s3.1</dstPort> </link> <link> <state> <congested>false</congested> </state> <srcPort>s2.2</srcPort> <dstPort>s3.2</dstPort> </link> </links> <networkDevicePortIdsMap> <entry> <key>s1.1</key> <value> <deviceId>openflowswitch:s1</deviceId> <devicePortId>1</devicePortId> </value> </entry> <entry> <key>s1.2</key> <value> <deviceId>openflowswitch:s1</deviceId> <devicePortId>2</devicePortId> </value> </entry> <entry> <key>s1.3</key> <value> <deviceId>openflowswitch:s1</deviceId> <devicePortId>3</devicePortId> </value> </entry> <entry> <key>s1.4</key> <value> <deviceId>openflowswitch:s1</deviceId> <devicePortId>4</devicePortId> </value> </entry> <entry> <key>s2.1</key> <value> <deviceId>openflowswitch:s2</deviceId> <devicePortId>1</devicePortId> </value> </entry> <entry> <key>s2.2</key> <value> <deviceId>openflowswitch:s2</deviceId> <devicePortId>2</devicePortId> </value> </entry> <entry> <key>s2.3</key> <value> <deviceId>openflowswitch:s2</deviceId> <devicePortId>3</devicePortId> </value> </entry> <entry> <key>s3.1</key> <value> <deviceId>openflowswitch:s3</deviceId> <devicePortId>1</devicePortId> </value> </entry> <entry> <key>s3.2</key> <value> <deviceId>openflowswitch:s3</deviceId> <devicePortId>2</devicePortId> </value> </entry> <entry> <key>s3.3</key> <value> <deviceId>openflowswitch:s3</deviceId> <devicePortId>3</devicePortId> </value> </entry> <entry> <key>s3.4</key> <value> <deviceId>openflowswitch:s3</deviceId> <devicePortId>4</devicePortId> </value> </entry> </networkDevicePortIdsMap> </ns2:topology>';
-var json = convertXml2JSon(xmlTopology);
-console.log(eval("(" + json + ")"));
-json = eval("(" + json + ")");
+var json = convertXml2JSonObject(xmlTopology);
 
 //drawTopology(json);
 
@@ -51,22 +49,21 @@ function drawTopology(){
     }
 
     //create edges
-var matrix = [];
-for(var i=0; i<nodes.length; i++) {
-    matrix[i] = [];
-    for(var j=0; j<nodes.length; j++) {
-        matrix[i][j] = false;
+    var matrix = [];
+    for(var i=0; i<nodes.length; i++) {
+        matrix[i] = [];
+        for(var j=0; j<nodes.length; j++) {
+            matrix[i][j] = false;
+        }
     }
-}
-for(var i=0; i<edges.length; i++) {
-    matrix[edges[i].s][edges[i].t] = true;
-    matrix[edges[i].t][edges[i].s] = true;
-}
-console.log(matrix);
+    for(var i=0; i<edges.length; i++) {
+        matrix[edges[i].s][edges[i].t] = true;
+        matrix[edges[i].t][edges[i].s] = true;
+    }
 
     nodes = StaticForcealgorithm(nodes, matrix);
     for(i=0; i < nodes.length; i++){
-    console.log(nodes[i].x + " "+ nodes[i].y);
+        console.log(nodes[i].x + " "+ nodes[i].y);
            if(nodes[i].x < 0){
                nodes[i].x = nodes[i].x + graph.getWidth()/2;
            }
@@ -79,8 +76,10 @@ console.log(matrix);
            if(nodes[i].y > graph.getHeight()){
                nodes[i].y = graph.getHeight();
            }
-        createSwitch(nodes[i].id, nodes[i].ports, nodes[i].x, nodes[i].y);
-
+//        createSwitch(nodes[i].id, nodes[i].ports, nodes[i].x, nodes[i].y);
+        var divPos = {x: nodes[i].x, y: nodes[i].y};
+        var data = {id: nodes[i].id, ports: nodes[i].ports};
+        createElement("ofSwitch", divPos, data);
        }
 
 }
@@ -93,24 +92,6 @@ function createSwitch(id, ports, x, y){
     ofSw.setX(x);
     ofSw.setY(y);
     ofSw.setPorts(ports, ofSw.id);
-    graph.addNodewithData(ofSw);
-}
-
-function defaultSwitches(){
-    OfSwitch.prototype = new NetworkElement();
-    var name = "00:0"+ graph.getNodes().length;
-    var ofSw = new OfSwitch(name);
-    ofSw.id = name;
-    ofSw.setX(150);
-    ofSw.setY(250);
-    graph.addNodewithData(ofSw);
-
-    OfSwitch.prototype = new NetworkElement();
-    name = "00:0"+ graph.getNodes().length;
-    ofSw = new OfSwitch(name);
-    ofSw.id = name;
-    ofSw.setX(250);
-    ofSw.setY(250);
     graph.addNodewithData(ofSw);
 }
 
