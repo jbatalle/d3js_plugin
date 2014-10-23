@@ -48,6 +48,17 @@ function convertXml2JSon(xml) {
     return JSON.stringify(x2js.xml_str2json(xml));
 }
 
+function convertXml2JSonString(xml) {
+    var x2js = new X2JS();
+    return JSON.stringify(x2js.xml_str2json(xml));
+}
+
+function convertXml2JSonObject(xml) {
+    var x2js = new X2JS();
+    var json = JSON.stringify(x2js.xml_str2json(xml));
+    return eval("(" + json + ")");
+}
+
 /**
  * Move element of array from src to dst.
  * @param {type} arr
