@@ -209,6 +209,39 @@ console.log("add link between ports");
             .attr("dx", function(d){ return d.text_x})
             .attr("dy", function(d){ return d.text_y})
             .text(function(d) {return d.id});
+        
+contextMenuShowing = false;        
+        nodeEnter.on("contextmenu", function(d, index) {
+             if(contextMenuShowing) {
+                d3.event.preventDefault();
+                d3.select(".popup_context_menu").remove();
+                contextMenuShowing = false;
+            } else {
+                console.log(d);
+                d3_target = d3.select(d3.event.target);
+                d3.event.preventDefault();
+                contextMenuShowing = true;
+
+                    // Build the popup
+                console.log("Build popup");
+                canvas = d3.select(el);
+                mousePosition = d3.mouse(canvas.node());
+                
+                popup = canvas.append("div")
+                    .attr("class", "popup_context_menu")
+                    .style("left", mousePosition[0] + "px")
+                    .style("top", mousePosition[1] + "px");
+                popup.append("h2").text(d.name);
+                popup.append("p").text("Id: "+d.id).append("p");
+                popup.append("p").text("Ports: "+d.ports.length);
+                d.ports.forEach(function(entry) {
+                    popup.append("li").text("Id: "+entry.id +". Name: "+entry.name);
+                });
+                popup.append("ul");
+        }
+//              stop showing browser menu
+//              d3.event.preventDefault();
+});
 
         var portsTest = nodeEnter.append("g").attr("id", "ports").selectAll("g.ports")
             .data(function(d){ return d.ports;});
