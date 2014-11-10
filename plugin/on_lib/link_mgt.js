@@ -15,7 +15,7 @@ function nodeMouseDown(node) {
     selected_link = null;
 //    $(document).on("dragstart", function () { return false; }); //disable drag in Firefox 3.0 and later
     // reposition drag line
-    console.log("DRag line to pos: "+mousedown_node.x + " y: "+mousedown_node.y);
+    console.log("Drag line to pos: "+mousedown_node.x + " y: "+mousedown_node.y);
     drag_line
         .style('marker-end', 'url(#end-arrow)')
         .classed('hidden', false)
@@ -46,7 +46,8 @@ function nodeMouseUp(d) {
     target = mouseup_node;
     newSource = source;
     console.log("Source " + source.id + " to Dest " + target.id);
-    console.log("Source " + source.x + " to Dest " + source.y);
+    console.log("Source " + source.x + " Source y " + source.y);
+    console.log("Dest " + target.x + " Dest y " + target.y);
     var link;
     link = links.filter(function (l) { return (l.source === source && l.target === target); })[0];
     

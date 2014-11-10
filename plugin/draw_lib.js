@@ -268,7 +268,16 @@ console.log("Change X "+(parentNode.x+d.posx));
                     console.log(startState);
                 }
             }).on("mouseup", function(d){
-                    nodeMouseUp(d);
+                var parentNode = graph.getNodes().filter(function (p) { return d.parent == p.id})[0];
+console.log(node);
+                    endState = d;
+
+                    //startState = node;
+console.log("Change X "+(parentNode.x+d.posx));
+                    endState.x = (parentNode.x+d.posx);
+                    endState.y = (parentNode.y+d.posy);
+                    endState.transitions = [];
+                    nodeMouseUp(endState);
             });
 
         portsTest.exit().remove();
