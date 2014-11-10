@@ -37,6 +37,15 @@ function myGraph(el) {
         ports.push = data;
         update();
     }
+    
+    this.addPortToNode = function (nodeId, port) {
+console.log("Add ports to node");
+        n = findNode(nodeId);
+        n.ports.push(port);
+        nodes.filter(function (d) { return d.id == nodeId})[0].ports = n.ports;
+console.log(nodes);        
+        update();
+    }
 
     this.removeNode = function (id) {
         var i = 0,
@@ -210,7 +219,6 @@ console.log("add link between ports");
             .attr("dy", function(d){ return d.text_y})
             .text(function(d) {return d.id});
         
-contextMenuShowing = false;        
         nodeEnter.on("contextmenu", function(d, index) {
              if(contextMenuShowing) {
                 d3.event.preventDefault();
@@ -222,8 +230,6 @@ contextMenuShowing = false;
                 d3.event.preventDefault();
                 contextMenuShowing = true;
 
-                    // Build the popup
-                console.log("Build popup");
                 canvas = d3.select(el);
                 mousePosition = d3.mouse(canvas.node());
                 
@@ -232,19 +238,25 @@ contextMenuShowing = false;
                     .style("left", mousePosition[0] + "px")
                     .style("top", mousePosition[1] + "px");
                 popup.append("h2").text(d.name);
-                popup.append("p").text("Id: "+d.id).append("p");
-                popup.append("p").text("Ports: "+d.ports.length);
+                popup.append("p").text("Id: "+d.id).append("p")
+                    .append("p").text("Ports: "+d.ports.length)
+                    .append("p").append("a")
+                    .attr({"xlink:href": "#"})
+                    .on("mousedown", function(){
+                        port_num = d.ports.length+1;
+                            port = {"id": d.id+port_num, "name": "ge-0/"+port_num, x: -23, y: 12, posx: -23, posy: 12, parent: d.id};
+                            graph.addPortToNode(d.id, port);
+                        })
+                    .text("Add port");
                 d.ports.forEach(function(entry) {
                     popup.append("li").text("Id: "+entry.id +". Name: "+entry.name);
                 });
-                popup.append("ul");
         }
-//              stop showing browser menu
-//              d3.event.preventDefault();
-});
+        });
 
-        var portsTest = nodeEnter.append("g").attr("id", "ports").selectAll("g.ports")
-            .data(function(d){ return d.ports;});
+        var portsTest = nodeEnter.append("g")
+            .attr("id", "ports").selectAll("g.ports")
+            .data(function(d){ console.log("ADD ports"); console.log(d.ports); return d.ports;});
 
         portsTest
             .enter().append("circle")
@@ -399,7 +411,6 @@ console.log("Change X "+(parentNode.x+d.posx));
         /* END Multi selection */
 
         force.on("tick", function() {
-
 
           node.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
         });

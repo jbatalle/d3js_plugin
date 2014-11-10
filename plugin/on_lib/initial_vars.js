@@ -21,7 +21,8 @@ var genericImages = {};
 genericImages["helpImage"] = plugin_path+"img/helpImage.png";
 
 //Editor options
-var multiSelectMode = false;
+var multiSelectMode = false, 
+    contextMenuShowing = false;
 
 d3.select(window)
     .on('keydown', keydown)

@@ -39,6 +39,9 @@ NetworkElement.prototype = {
     },
     getPorts: function(){
 	   return this.ports;
+    },
+    addPort: function(port){
+        this.ports.push(port);
     }
 };
 
