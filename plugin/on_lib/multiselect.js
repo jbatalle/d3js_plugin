@@ -138,3 +138,14 @@ console.log("Dragging Node - Look Portrs");
         startState = undefined;
         d3.event.sourceEvent.stopPropagation();
     });
+
+
+/*
+ * Change selection mode
+ */
+function changeSelectMode() {
+    if( multiSelectMode == true ) multiSelectMode = false;
+    else  multiSelectMode = true;
+    
+    document.getElementById("selectModeButton").value="Multiselect: "+multiSelectMode;
+}

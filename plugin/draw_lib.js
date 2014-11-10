@@ -306,19 +306,19 @@ console.log("Change X "+(parentNode.x+d.posx));
                     if (!d3.event.ctrlKey) {
                         d3.selectAll('g.selected').classed("selected", false);
                     }
-
-                    var p = d3.mouse(this);
-
-                    vis.append("rect")
-                        .attr({
-                            rx: 6,
-                            ry: 6,
-                            class: "selection",
-                            x: p[0],
-                            y: p[1],
-                            width: 0,
-                            height: 0
+                    if(multiSelectMode){
+                        var p = d3.mouse(this);
+                        vis.append("rect")
+                            .attr({
+                                rx: 6,
+                                ry: 6,
+                                class: "selection",
+                                x: p[0],
+                                y: p[1],
+                                width: 0,
+                                height: 0
                         });
+                    }
                 }
             },
             mousemove: function () {
