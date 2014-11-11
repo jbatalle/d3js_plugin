@@ -308,13 +308,12 @@ console.log("Change X "+(parentNode.x+d.posx));
         var radius = 40;
         vis.on({
             mousedown: function () {
-                console.log("Selection enabled");
+console.log("Selection enabled");
                 if (d3.event.target.tagName == 'svg') {
                     drag_line
                         .classed('hidden', true)
                         .style('marker-end', '');
                         startState = undefined;
-                    console.log("Selected SVG");
                     if (!d3.event.ctrlKey) {
                         d3.selectAll('g.selected').classed("selected", false);
                     }
@@ -366,7 +365,7 @@ console.log("Change X "+(parentNode.x+d.posx));
 
                     // deselect all temporary selected state objects
                     d3.selectAll('g.node.selection.selected').classed("selected", false);
-                    console.log("Select");
+console.log("Select");
                     d3.selectAll('g.node').each(function (state_data, i) {
                         if (!d3.select(this).classed("selected") &&
                             // inner circle inside selection frame
@@ -390,7 +389,7 @@ console.log("Change X "+(parentNode.x+d.posx));
                 }
             },
             mouseup: function () {
-                console.log("mouseup");
+console.log("Mouseup");
                 // remove selection frame
                 vis.selectAll("rect.selection").remove();
 

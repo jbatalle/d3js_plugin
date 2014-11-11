@@ -1,6 +1,7 @@
 var drag = d3.behavior.drag()
     .on("drag", function (d, i) {
         
+console.log("Drag");        
         var link = graph.vis.selectAll("line.link")
                     .data(graph.getLinks());
         
@@ -68,7 +69,7 @@ var drag = d3.behavior.drag()
 
             d3.event.sourceEvent.stopPropagation();
         } else{
-            console.log("Drag one node");
+console.log("Drag one node");
             if(ctrlKey){
                 var selection = d3.selectAll('.selected');
 
@@ -95,12 +96,12 @@ var drag = d3.behavior.drag()
                     if (d.y > graph.getHeight()) {
                         d.y = graph.getHeight();
                     }
-console.log("Dragging Node - Look Portrs");
+console.log("Dragging Node - Look Ports");
                     console.log(d);
                     d.ports[0].x = d.ports[0].posx + d.x;
                     d.ports[0].y =  d.ports[0].posy + d.y;
                     d.ports[1].x =  d.ports[1].posx + d.x;
-                    d.ports[1].y =  d.ports[1].posy+ d.y;
+                    d.ports[1].y =  d.ports[1].posy + d.y;
                     for(var i=0; i<d.ports.length; i++){
 //                        console.log(d.ports[i]);
                         transform(d.ports[i]);

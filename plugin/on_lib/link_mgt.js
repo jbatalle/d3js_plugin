@@ -7,7 +7,7 @@ function linkMouseUp(link) {
 }
 
 function nodeMouseDown(node) {
-    console.log("Node Mouse down");
+    console.log("Node Mouse down "+node.id)
     // select node
     mousedown_node = node;
     if (mousedown_node === selected_node) selected_node = null;
@@ -41,7 +41,7 @@ function nodeMouseUp(d) {
     }
     // add link to graph (update if exists)
     // NB: links are strictly source < target; arrows separately specified by booleans
-    var source, target, newSource;
+    var source, target;
     source = mousedown_node;
     target = mouseup_node;
     newSource = source;
