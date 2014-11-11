@@ -7,7 +7,7 @@ function linkMouseUp(link) {
 }
 
 function nodeMouseDown(node) {
-    console.log("Node Mouse down");
+    console.log("Node Mouse down "+node.id);
     // select node
     mousedown_node = node;
     if (mousedown_node === selected_node) selected_node = null;
@@ -35,21 +35,20 @@ function nodeMouseUp(d) {
     
     // check for drag-to-self
     mouseup_node = d;
+console.log(d);    
     if (mouseup_node === mousedown_node) {
         resetMouseVars();
         return;
     }
     // add link to graph (update if exists)
     // NB: links are strictly source < target; arrows separately specified by booleans
-    var source, target, newSource;
+    var source, target;
     source = mousedown_node;
     target = mouseup_node;
-    newSource = source;
     console.log("Source " + source.id + " to Dest " + target.id);
-    console.log("Source " + source.x + " Source y " + source.y);
-    console.log("Dest " + target.x + " Dest y " + target.y);
-    var link;
-    link = links.filter(function (l) { return (l.source === source && l.target === target); })[0];
+//    console.log("Source " + source.x + " Source y " + source.y);
+//    console.log("Dest " + target.x + " Dest y " + target.y);
+    var link = links.filter(function (l) { return (l.source === source && l.target === target); })[0];
     
     d3.selectAll('.dragline').attr('d', 'M0,0L0,0'); //Remove the requested path
     
@@ -60,7 +59,6 @@ function nodeMouseUp(d) {
     if( links.filter(function (l) { return (l.source === source && l.target === target); }).length > 0) return;
 //    graph.addLink(source.id, target.id);
     graph.addLinkBetweenPorts(source.id, target.id);
-console.log(links);
     //            updateLinks();
 
 }

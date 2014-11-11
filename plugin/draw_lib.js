@@ -75,7 +75,8 @@ console.log("add link between ports");
 //        links.push({id: source+"-"+target, source:findNode(source), target:findNode(target)});
         links.push({id: source+"-"+target, source:findPortNode(source), target:findPortNode(target)});
         console.log(links);
-        update();
+//        update();
+        updateLinks();
     }
 
     this.removeLink = function (id) {
@@ -157,11 +158,13 @@ console.log("add link between ports");
     var nodes = force.nodes(),
         links = force.links();
 
+    var node = vis.append("svg:g").selectAll("g.node");
     var link = vis.append("svg:g").selectAll("link.sw");
+    var paths = vis.append("svg:g").selectAll("paths.sw");
 
-    var update = this.update = function () {
- console.log("Updated executed");
-        link = link.data(links);
+    var updateLinks = this.updateLinks =function () {
+console.log("Updated links");
+/*        link = link.data(links);
 
         link.enter().append("svg:line")
             .attr('id', function (d) {return d.id;})
@@ -176,15 +179,58 @@ console.log("add link between ports");
                 linkMouseUp(d);
             });
         link
-            .attr("x1", function(d) { return d.source.x; })
-            .attr("y1", function(d) { return d.source.y; })
-            .attr("x2", function(d) { return d.target.x; })
-            .attr("y2", function(d) { return d.target.y; });
+            .attr("x1", function(d) { console.log(d.source); return d.source.testx; })
+            .attr("y1", function(d) { return d.source.testy; })
+            .attr("x2", function(d) { return d.target.testx; })
+            .attr("y2", function(d) { return d.target.testy; });
 
         link.exit().remove();
+        
+        */
+        /////
+        
+        paths = paths.data(links, function(d){
+            console.log("Links: "+d.source.id+" "+d.target.id);
+            return String(d.source.id) + "+" + String(d.target.id);
+        });
+        // add new paths   
+        paths.enter().append("path")
+            .style('marker-end','url(#end-arrow)')
+            .classed("link", true)
+            .style('fill', 'none');
+        
+        paths
+            .attr("d", function(d){
+console.log("Data...................................");
+        var p = [];
+            p[0] = {x: d.source.testx, y: d.source.testy};
+            p[1] = {x: (d.source.testx + d.target.testx)/2, y: d.source.testy};
+            p[2] = {x: (d.source.testx + d.target.testx)/2, y: d.target.testy};
+            p[3] = {x: d.target.testx, y: d.target.testy};
+        var conString = "M"+p[0].x+","+p[0].y;
+        for(i=1;i<p.length;i++){
+            conString += "L"+p[i].x+","+p[i].y;
+        }
+        return conString;
+      })
+      .on("mousedown", function(d){
+        thisGraph.pathMouseDown.call(thisGraph, d3.select(this), d);
+        }
+      )
+      .on("mouseup", function(d){
+        state.mouseDownLink = null;
+      });
 
-        var node = vis.selectAll("g.node")
-            .data(nodes);
+    // remove old links
+    paths.exit().remove();
+        //////
+    }
+    
+    var update = this.update = function () {
+console.log("Updated executed");
+        updateLinks();
+
+        node = node.data(nodes);
 
         var nodeEnter = this.nodeEnter = node.enter().append("g")
             .attr("class", "node")
@@ -252,6 +298,8 @@ console.log("add link between ports");
                     popup.append("li").text("Id: "+entry.id +". Name: "+entry.name);
                 });
         }
+//              stop showing browser menu
+//              d3.event.preventDefault();
         });
 
         var portsTest = nodeEnter.append("g")
@@ -259,11 +307,12 @@ console.log("add link between ports");
             .data(function(d){ console.log("ADD ports"); console.log(d.ports); return d.ports;});
 
         portsTest
-            .enter().append("circle")
+            .enter().append("rect")
                 .attr("id",function(d){ return d.id;})
                 .attr("cx", function(d){ return d.posx;})
                 .attr("cy", function(d){ return d.posy;})
-                .attr("r", function(d) { return 7; })
+                .attr("width", 12)
+                .attr("height", 12)
             .on("mousedown", function(d){
                 if (!ctrlKey) {
                     console.log("Click on port "+d.name);
@@ -273,23 +322,25 @@ console.log(node);
 
                     //startState = node;
 console.log("Change X "+(parentNode.x+d.posx));
-                    startState.x = (parentNode.x+d.posx);
-                    startState.y = (parentNode.y+d.posy);
+                    startState.testx = (parentNode.x+d.posx);
+                    startState.testy = (parentNode.y+d.posy);
                     startState.transitions = [];
                     nodeMouseDown(startState);
                     console.log(startState);
                 }
             }).on("mouseup", function(d){
                 var parentNode = graph.getNodes().filter(function (p) { return d.parent == p.id})[0];
-console.log(node);
+console.log(d);
                     endState = d;
 
                     //startState = node;
 console.log("Change X "+(parentNode.x+d.posx));
-                    endState.x = (parentNode.x+d.posx);
-                    endState.y = (parentNode.y+d.posy);
+                    endState.testx = (parentNode.x+d.posx);
+                    endState.testy = (parentNode.y+d.posy);
                     endState.transitions = [];
                     nodeMouseUp(endState);
+                    endState = undefined
+                    startState = undefined
             });
 
         portsTest.exit().remove();
@@ -308,15 +359,17 @@ console.log("Change X "+(parentNode.x+d.posx));
         var radius = 40;
         vis.on({
             mousedown: function () {
-                console.log("Selection enabled");
+console.log("Selection enabled");
                 if (d3.event.target.tagName == 'svg') {
                     drag_line
                         .classed('hidden', true)
                         .style('marker-end', '');
-                        startState = undefined;
-                    console.log("Selected SVG");
+                    startState = undefined;
                     if (!d3.event.ctrlKey) {
                         d3.selectAll('g.selected').classed("selected", false);
+
+                        d3.select(".popup_context_menu").remove();//Close popup
+                        contextMenuShowing = false;
                     }
                     if(multiSelectMode){
                         var p = d3.mouse(this);
@@ -366,7 +419,7 @@ console.log("Change X "+(parentNode.x+d.posx));
 
                     // deselect all temporary selected state objects
                     d3.selectAll('g.node.selection.selected').classed("selected", false);
-                    console.log("Select");
+console.log("Select");
                     d3.selectAll('g.node').each(function (state_data, i) {
                         if (!d3.select(this).classed("selected") &&
                             // inner circle inside selection frame
@@ -381,16 +434,15 @@ console.log("Change X "+(parentNode.x+d.posx));
                     });
                 } else if (startState) {
                     // update drag line
-                    drag_line.attr('d', 'M' + startState.x + ',' + startState.y + 'L' + p[0] + ',' + p[1]);
+                    drag_line.attr('d', 'M' + startState.testx + ',' + startState.testy + 'L' + p[0] + ',' + p[1]);
 
                     //                var state = d3.select( 'g.node .inner.hover');
                     var state = d3.select('g.node');
-
                     endState = (!state.empty() && state.data()[0]) || undefined;
                 }
             },
             mouseup: function () {
-                console.log("mouseup");
+console.log("Mouseup");
                 // remove selection frame
                 vis.selectAll("rect.selection").remove();
 
@@ -424,7 +476,7 @@ console.log("Change X "+(parentNode.x+d.posx));
 }
 
 function transform(d) {
-    return "translate(" + d.x + "," + d.y + ")";
+    return "translate(" + d.testx + "," + d.testy + ")";
 }
 
 function updateNodes(){
