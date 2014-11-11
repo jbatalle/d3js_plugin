@@ -316,6 +316,9 @@ console.log("Selection enabled");
                         startState = undefined;
                     if (!d3.event.ctrlKey) {
                         d3.selectAll('g.selected').classed("selected", false);
+                        
+                        d3.select(".popup_context_menu").remove();//Close popup
+                        contextMenuShowing = false;
                     }
                     if(multiSelectMode){
                         var p = d3.mouse(this);
