@@ -5,7 +5,7 @@ TODO:
 -----
  - Selection. First 5 seconds doesn't work
  - Create links with drag (1/2). Put mode type
- - Add ports (1/2)
+ - Add ports (1/2) <img width="20" src="http://www.clipartbest.com/cliparts/Kin/q5R/Kinq5Rkiq.png"/> Problem updating nodes view
  - Add modes (create links, selection...)
  - Simplify the core, externalize more functions
  - Create the html architecture
@@ -20,7 +20,8 @@ TODO:
  - Mouseover port show name
  - Port position as a variable (depends on the tempalte/model)
  - Add ports to created element (1/2). Position of ports, different from each element
- - Disable multiselect rect when is disabled
+ - Disable multiselect rect when is disabled <img width="20" src="http://www.clipartbest.com/cliparts/dT8/5e6/dT85e6aqc.png"/>
+ - Right button on node open a popup menu with node info <img width="20" src="http://www.clipartbest.com/cliparts/dT8/5e6/dT85e6aqc.png"/>
 
 lib <--> genericTemplate (onMouseDown) <--> depends on the node type (proxy?) <--> call specific function
 
