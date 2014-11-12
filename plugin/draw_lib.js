@@ -332,6 +332,8 @@ console.log(node);
 console.log("Change X "+(parentNode.x+d.posx));
                     startState.x = (parentNode.x+d.posx);
                     startState.y = (parentNode.y+d.posy);
+                    startState.testx = (parentNode.x+d.posx);
+                    startState.testy = (parentNode.y+d.posy);
                     startState.transitions = [];
                     nodeMouseDown(startState);
                     console.log(startState);
@@ -395,7 +397,6 @@ console.log("Selection enabled");
             mousemove: function () {
                 var p = d3.mouse(this),
                     s = vis.select("rect.selection");
-
                 if (!s.empty()) {
                     var d = {
                         x: parseInt(s.attr("x"), 10),

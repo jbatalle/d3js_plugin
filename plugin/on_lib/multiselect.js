@@ -5,7 +5,7 @@ console.log("Drag");
                     .data(graph.getLinks());
         
         if(multiSelectMode){
-            console.log("drag");
+console.log("drag");
             if (startState) {
                 //return;
             }
