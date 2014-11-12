@@ -316,11 +316,12 @@ var zoom = d3.behavior.zoom()
             .data(function(d){ console.log("ADD ports"); console.log(d.ports); return d.ports;});
 
         portsTest
-            .enter().append("circle")
+            .enter().append("rect")
                 .attr("id",function(d){ return d.id;})
                 .attr("cx", function(d){ return d.posx;})
                 .attr("cy", function(d){ return d.posy;})
-                .attr("r", function(d) { return 7; })
+                .attr("width", 12)
+                .attr("height", 12)
             .on("mousedown", function(d){
                 if (!ctrlKey) {
                     console.log("Click on port "+d.name);
@@ -372,7 +373,7 @@ console.log("Selection enabled");
                     drag_line
                         .classed('hidden', true)
                         .style('marker-end', '');
-                        startState = undefined;
+                    startState = undefined;
                     if (!d3.event.ctrlKey) {
                         d3.selectAll('g.selected').classed("selected", false);
                         
