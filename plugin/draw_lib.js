@@ -144,23 +144,78 @@ console.log("add link between ports");
         return h;
     }
 
-    var vis = this.vis = d3.select(el).append("svg:svg")
+    var vis = this.vis = d3.select(el)
+        .append("svg:svg")
         .attr("width", w)
-        .attr("height", h);
+        .attr("height", h)
+        .attr("pointer-events", "all") // Might need to come back to this
+//        .append('g')
+//        .call(d3.behavior.zoom().on("zoom", redraw))
+    ;
 
+    var containerSVG = vis.append("g")
+        .attr("id", "svgContainer")
+        .call(d3.behavior.zoom().on("zoom", redraw));
+    
     var force = d3.layout.force()
         .linkDistance(30)
         .size([w, h]);
+var zoom = d3.behavior.zoom()
+    				.scaleExtent(1,10)
+    				.on("zoom", zoomed);
+                    
+    function redraw() {
+        var currentTranslateZoom = d3.event.translate;
+        var currentZoom = d3.event.scale;
+        console.log(currentZoom);
+        console.log(currentTranslateZoom);
+        console.log("Zoom");
+          vis.attr("transform",
+              "translate(" + d3.event.translate + ")" + " scale(" + d3.event.scale + ")");
+      }
+    this.zoomIn = function () {
+        var currentZoom = zoom.scale();
+        console.log(currentZoom);
+        console.log("Zoom");
+        var newScale = zoom.scale() + 0.1;
+        zoom.scale(newScale);
+          containerSVG.attr("transform",
+              "translate(" + zoom.translate() + ")" + " scale(" + newScale + ")");
+      }
+    this.zoomOut = function () {
+        var currentZoom = zoom.scale();
+        var newScale = zoom.scale() - 0.1;
+        zoom.scale(newScale);
+          containerSVG.attr("transform",
+              "translate(" + zoom.translate() + ")" + " scale(" + newScale + ")");
+      }
+    function zoomed() { //handle the mousewheel zoom and mouse drag
+        console.log("Zoomed");
+    		var t = d3.event.translate;
+    		var s = d3.event.scale;
 
-    drag_line = vis.append('svg:path')
+    						 //those 2 values ajust the limits of the drag, so the map dont exit completly the visible zone.
+    		var h = height / 1.3;
+    		var w = width / 1.4;
+
+    		//black magic to calculate the zoom and the limits the map can be dragged around.
+    		t[0] = Math.min(width / 2 * (s - 1) + w * s, Math.max(width / 2 * (1 - s) - w * s, t[0]));
+    		t[1] = Math.min(height / 2 * (s - 1) + h * s, Math.max(height / 2 * (1 - s) - h * s, t[1]));
+
+    		//apply new zoom
+    		g.attr("transform", "translate(" + t + ")scale(" + s + ")")
+    			//keep the border line of element proportional to the new zoom level
+    			.selectAll('path').style("stroke-width", 1 / d3.event.scale + "px");
+    	}
+    drag_line = containerSVG.append('svg:path')
         .attr({ 'class' : 'dragline hidden', 'd' : 'M0,0L0,0'});
 
     var nodes = force.nodes(),
         links = force.links();
 
-    var node = vis.append("svg:g").selectAll("g.node");
-    var link = vis.append("svg:g").selectAll("link.sw");
-    var paths = vis.append("svg:g").selectAll("paths.sw");
+    var node = containerSVG.append("svg:g").selectAll("g.node");
+    var link = containerSVG.append("svg:g").selectAll("link.sw");
+    var paths = containerSVG.append("svg:g").selectAll("paths.sw");
 
     var updateLinks = this.updateLinks =function () {
 console.log("Updated links");
@@ -322,6 +377,8 @@ console.log(node);
 
                     //startState = node;
 console.log("Change X "+(parentNode.x+d.posx));
+                    startState.x = (parentNode.x+d.posx);
+                    startState.y = (parentNode.y+d.posy);
                     startState.testx = (parentNode.x+d.posx);
                     startState.testy = (parentNode.y+d.posy);
                     startState.transitions = [];
@@ -389,7 +446,6 @@ console.log("Selection enabled");
             mousemove: function () {
                 var p = d3.mouse(this),
                     s = vis.select("rect.selection");
-
                 if (!s.empty()) {
                     var d = {
                         x: parseInt(s.attr("x"), 10),
@@ -434,6 +490,7 @@ console.log("Select");
                     });
                 } else if (startState) {
                     // update drag line
+                    console.log(startState);
                     drag_line.attr('d', 'M' + startState.testx + ',' + startState.testy + 'L' + p[0] + ',' + p[1]);
 
                     //                var state = d3.select( 'g.node .inner.hover');
