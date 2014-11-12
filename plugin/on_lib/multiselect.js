@@ -1,6 +1,6 @@
 var drag = d3.behavior.drag()
     .on("drag", function (d, i) {
-console.log("Drag");        
+console.log("Drag");
         var link = graph.vis.selectAll("line.link")
                     .data(graph.getLinks());
         
@@ -24,9 +24,9 @@ console.log("Drag");
                 
 
                 //                console.log(link.filter(function(l) { return l.source === this; }));
-                link.filter(function (l) { return l.source === d;}).attr("x1", d.x).attr("y1", d.y);
-                link.filter(function (l) { return l.target === d; }).attr("x2", d.x).attr("y2", d.y);
-
+                link.filter(function (l) { return l.source === d;}).attr("x1", d.testx).attr("y1", d.testy);
+                link.filter(function (l) { return l.target === d; }).attr("x2", d.testx).attr("y2", d.testy);
+graph.updateLinks();
                 d.x += d3.event.dx;
                 d.y += d3.event.dy;
                 if (d.x < 0) {
