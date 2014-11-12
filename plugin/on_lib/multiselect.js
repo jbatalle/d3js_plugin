@@ -24,8 +24,8 @@ console.log("drag");
                 
 
                 //                console.log(link.filter(function(l) { return l.source === this; }));
-                link.filter(function (l) { return l.source === d;}).attr("x1", d.testx).attr("y1", d.testy);
-                link.filter(function (l) { return l.target === d; }).attr("x2", d.testx).attr("y2", d.testy);
+                link.filter(function (l) { return l.source === d;}).attr("x1", d.x).attr("y1", d.y);
+                link.filter(function (l) { return l.target === d; }).attr("x2", d.x).attr("y2", d.y);
 graph.updateLinks();
                 d.x += d3.event.dx;
                 d.y += d3.event.dy;
@@ -106,8 +106,8 @@ console.log("Dragging Node - Look Ports");
 //                        console.log(d.ports[i]);
                         transform(d.ports[i]);
 console.log(link);
-                        link.filter(function (l) { return l.source === d.ports[i];}).attr("x1", d.ports[i].testx).attr("y1", d.ports[i].testy);  
-                        link.filter(function (l) { return l.target === d.ports[i]; }).attr("x2", d.ports[i].testx).attr("y2", d.ports[i].testy);
+                        link.filter(function (l) { return l.source === d.ports[i];}).attr("x1", d.ports[i].x).attr("y1", d.ports[i].y);  
+                        link.filter(function (l) { return l.target === d.ports[i]; }).attr("x2", d.ports[i].x).attr("y2", d.ports[i].y);
                     }
                     graph.updateLinks();
 //                    link.filter(function (l) { return l.source === d;}).attr("x1", d.x).attr("y1", d.y);
