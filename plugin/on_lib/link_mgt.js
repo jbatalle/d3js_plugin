@@ -19,7 +19,7 @@ function nodeMouseDown(node) {
     drag_line
         .style('marker-end', 'url(#end-arrow)')
         .classed('hidden', false)
-        .attr('d', 'M' + mousedown_node.x + ',' + mousedown_node.y+ 'L' + mousedown_node.x + ',' + mousedown_node.y);
+        .attr('d', 'M' + mousedown_node.testx + ',' + mousedown_node.testy + 'L' + mousedown_node.testx + ',' + mousedown_node.testy);
 }
 
 /* End create Link */
@@ -59,5 +59,6 @@ console.log(d);
     if( links.filter(function (l) { return (l.source === source && l.target === target); }).length > 0) return;
 //    graph.addLink(source.id, target.id);
     graph.addLinkBetweenPorts(source.id, target.id);
+    //            updateLinks();
 
 }

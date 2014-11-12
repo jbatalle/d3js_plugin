@@ -24,9 +24,9 @@ console.log("drag");
                 
 
                 //                console.log(link.filter(function(l) { return l.source === this; }));
-                link.filter(function (l) { return l.source === d;}).attr("x1", d.x).attr("y1", d.y);
-                link.filter(function (l) { return l.target === d; }).attr("x2", d.x).attr("y2", d.y);
-
+                link.filter(function (l) { return l.source === d;}).attr("x1", d.testx).attr("y1", d.testy);
+                link.filter(function (l) { return l.target === d; }).attr("x2", d.testx).attr("y2", d.testy);
+graph.updateLinks();
                 d.x += d3.event.dx;
                 d.y += d3.event.dy;
                 if (d.x < 0) {
@@ -98,17 +98,18 @@ console.log("Drag one node");
 console.log("Dragging Node - Look Ports");
                     console.log(d);
 
-                    d.ports[0].x = d.ports[0].posx + d.x;
-                    d.ports[0].y =  d.ports[0].posy + d.y;
-                    d.ports[1].x =  d.ports[1].posx + d.x;
-                    d.ports[1].y =  d.ports[1].posy + d.y;
+                    d.ports[0].testx = d.ports[0].posx + d.x;
+                    d.ports[0].testy =  d.ports[0].posy + d.y;
+                    d.ports[1].testx =  d.ports[1].posx + d.x;
+                    d.ports[1].testy =  d.ports[1].posy + d.y;
                     for(var i=0; i<d.ports.length; i++){
 //                        console.log(d.ports[i]);
                         transform(d.ports[i]);
 console.log(link);
-                        link.filter(function (l) { return l.source === d.ports[i];}).attr("x1", d.ports[i].x).attr("y1", d.ports[i].y);  
-                        link.filter(function (l) { return l.target === d.ports[i]; }).attr("x2", d.ports[i].x).attr("y2", d.ports[i].y);
+                        link.filter(function (l) { return l.source === d.ports[i];}).attr("x1", d.ports[i].testx).attr("y1", d.ports[i].testy);  
+                        link.filter(function (l) { return l.target === d.ports[i]; }).attr("x2", d.ports[i].testx).attr("y2", d.ports[i].testy);
                     }
+                    graph.updateLinks();
 //                    link.filter(function (l) { return l.source === d;}).attr("x1", d.x).attr("y1", d.y);
 //                    link.filter(function (l) { return l.target === d; }).attr("x2", d.x).attr("y2", d.y);
                     return "translate(" + [d.x, d.y] + ")";
